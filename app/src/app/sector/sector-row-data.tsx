@@ -8,12 +8,13 @@ import { buildLiquidityMetrics } from './input/liquidity';
 import { buildLeverageMetrics } from './input/leverage';
 import { buildEfficiencyMetrics } from './input/efficiency';
 import { buildGrowthMetrics } from './input/growth';
+import { Factor } from './input/factor'
 
 
 export interface RowData {
-    label: string,
-    weight: string,
-    [key: string]: any
+    label: string;
+    weight: string;
+    [key: string]: any;
 }
 
 export const buildSectorRowData = function(
