@@ -10,11 +10,16 @@ import { Factor } from './input/cell/factor';
 
 import { Weight } from './input/cell/weight';
 
+import { AddCompanyButton } from './input/cell/add-company';
+
 
 export const getSectorColumns = function(
-    companyList: CompanyProps[]
+    companyList: CompanyProps[],
+    onUpdateColumns: () => void
 ): any {
     let columns: any[] = [{Header: "", accessor: "label"}];
+
+    // Add each company to the columns
     companyList.forEach(
         (company: CompanyProps) => 
         columns.push({
@@ -23,6 +28,12 @@ export const getSectorColumns = function(
             minWidth: 140,
             Cell: (cellInfo: CellInfo) => <Factor value={cellInfo.value}/>
         }));
+
+    // Add the add columns button
+    columns.push({
+        Header: () => <AddCompanyButton onAddCompany={onUpdateColumns}/>
+    });
+
     columns.push({
         Header: "Weight",
         accessor: "weight",
