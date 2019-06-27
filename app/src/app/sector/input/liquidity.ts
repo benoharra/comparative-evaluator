@@ -6,7 +6,7 @@ export const buildLiquidityMetrics = function(
 ) : RowData[] {
     let allLiquidityRows: RowData[] = [{
         label: "Liquidity",
-        weight: "10%"
+        weight: 10
     }];
     allLiquidityRows.push(quickRatio(companyList));
     allLiquidityRows.push(currentRatio(companyList));
@@ -19,7 +19,7 @@ const quickRatio = function(
 ) : RowData {
     let quickRatioRow: RowData = {
         label: "Quick Ratio",
-        weight: "5%"
+        weight: 5
     };
     companyList.forEach((company) => {
         quickRatioRow[company.ticker] = company.liquidity.quickRatio;
@@ -32,7 +32,7 @@ const currentRatio = function(
 ) : RowData {
     let currentRatioRow: RowData = {
         label: "Current Ratio",
-        weight: "5%"
+        weight: 5
     };
     companyList.forEach((company) => {
         currentRatioRow[company.ticker] = company.liquidity.currentRatio;

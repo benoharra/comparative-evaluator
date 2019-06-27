@@ -6,7 +6,7 @@ export const buildGrowthMetrics = function(
 ) : RowData[] {
     let allGrowthRows: RowData[] = [{
         label: "Growth",
-        weight: "36%"
+        weight: 36
     }];
     allGrowthRows.push(fiveYearRev(companyList));
     allGrowthRows.push(fiveYearEps(companyList));
@@ -21,7 +21,7 @@ const fiveYearRev = function(
 ) : RowData {
     let fiveYearRevRow: RowData = {
         label: "5 yr. Revenue Growth",
-        weight: "6%"
+        weight: 6
     };
     companyList.forEach((company) => {
         fiveYearRevRow[company.ticker] = company.growth.fiveYearRev;
@@ -34,7 +34,7 @@ const fiveYearEps = function(
 ) : RowData {
     let fiveYearEpsRow: RowData = {
         label: "5 yr. EPS Growth",
-        weight: "6%"
+        weight: 6
     };
     companyList.forEach((company) => {
         fiveYearEpsRow[company.ticker] = company.growth.fiveYearEps;
@@ -47,7 +47,7 @@ const oneYearRev = function(
 ) : RowData {
     let oneYearRevRow: RowData = {
         label: "1 yr. Revenue Growth",
-        weight: "12%"
+        weight: 12
     };
     companyList.forEach((company) => {
         oneYearRevRow[company.ticker] = company.growth.oneYearRev;
@@ -60,7 +60,7 @@ const oneYearEps = function(
 ) : RowData {
     let oneYearEpsRow: RowData = {
         label: "1 yr. EPS Growth",
-        weight: "12%"
+        weight: 12
     };
     companyList.forEach((company) => {
         oneYearEpsRow[company.ticker] = company.growth.oneYearEps;

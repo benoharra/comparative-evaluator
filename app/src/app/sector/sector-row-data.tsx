@@ -9,11 +9,10 @@ import { buildLeverageMetrics } from './input/leverage';
 import { buildEfficiencyMetrics } from './input/efficiency';
 import { buildGrowthMetrics } from './input/growth';
 
-
 export interface RowData {
-    label: string,
-    weight: string,
-    [key: string]: any
+    label: string;
+    weight: number;
+    [key: string]: any;
 }
 
 export const buildSectorRowData = function(
