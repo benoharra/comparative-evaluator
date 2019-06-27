@@ -6,7 +6,7 @@ export const buildEfficiencyMetrics = function(
 ) : RowData[] {
     let allEfficiencyRows: RowData[] = [{
         label: "Efficiency",
-        weight: "19%"
+        weight: 19
     }];
     allEfficiencyRows.push(receivableTurnover(companyList));
     allEfficiencyRows.push(assetTurnover(companyList));
@@ -20,7 +20,7 @@ const receivableTurnover = function(
 ) : RowData {
     let receivableTurnoverRow: RowData = {
         label: "Receivable Turnover",
-        weight: "5%"
+        weight: 5
     };
     companyList.forEach((company) => {
         receivableTurnoverRow[company.ticker] = company.efficiency.receivableTurnover;
@@ -33,7 +33,7 @@ const assetTurnover = function(
 ) : RowData {
     let assetTurnoverRow: RowData = {
         label: "Asset Turnover",
-        weight: "6%"
+        weight: 6
     };
     companyList.forEach((company) => {
         assetTurnoverRow[company.ticker] = company.efficiency.assetTurnover;
@@ -46,7 +46,7 @@ const inventoryTurnover = function(
 ) : RowData {
     let inventoryTurnoverRow: RowData = {
         label: "Inventory Turnover",
-        weight: "8%"
+        weight: 8
     };
     companyList.forEach((company) => {
         inventoryTurnoverRow[company.ticker] = company.efficiency.inventoryTurnover;

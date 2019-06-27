@@ -6,15 +6,13 @@ import { Column, CellInfo } from "react-table";
 
 import { CompanyProps } from './data-mocker';
 
-import { Factor } from './input/factor';
+import { Factor } from './input/cell/factor';
 
-import { RowData } from './sector-row-data';
-
+import { Weight } from './input/cell/weight';
 
 
 export const getSectorColumns = function(
     companyList: CompanyProps[]
-    //tableData: RowData[]
 ): any {
     let columns: any[] = [{Header: "", accessor: "label"}];
     companyList.forEach(
@@ -27,7 +25,8 @@ export const getSectorColumns = function(
         }));
     columns.push({
         Header: "Weight",
-        accessor: "weight"
+        accessor: "weight",
+        Cell: (cellInfo: CellInfo) => <Weight value={cellInfo.value}/>
     });
     return columns;
 };

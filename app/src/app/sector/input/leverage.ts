@@ -6,7 +6,7 @@ export const buildLeverageMetrics = function(
 ) : RowData[] {
     let allLeverageRows: RowData[] = [{
         label: "Leverage",
-        weight: "11%"
+        weight: 11
     }];
     allLeverageRows.push(debtToEquity(companyList));
     allLeverageRows.push(interestCoverage(companyList));
@@ -19,7 +19,7 @@ const debtToEquity = function(
 ) : RowData {
     let debtToEquityRow: RowData = {
         label: "Debt to Equity",
-        weight: "6%"
+        weight: 6
     };
     companyList.forEach((company) => {
         debtToEquityRow[company.ticker] = company.leverage.debtToEquity;
@@ -32,7 +32,7 @@ const interestCoverage = function(
 ) : RowData {
     let interestCoverageRow: RowData = {
         label: "Interest Coverage",
-        weight: "5%"
+        weight: 5
     };
     companyList.forEach((company) => {
         interestCoverageRow[company.ticker] = company.leverage.interestCoverage;

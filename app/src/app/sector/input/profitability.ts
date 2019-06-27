@@ -6,7 +6,7 @@ export const buildProfitMetrics = function(
 ) : RowData[] {
     let allProfitRows: RowData[] = [{
         label: "Profitability",
-        weight: "24%"
+        weight: 24
     }];
     allProfitRows.push(grossProfit(companyList));
     allProfitRows.push(netProfit(companyList));
@@ -21,7 +21,7 @@ const grossProfit = function(
 ) : RowData {
     let grossProfitRow: RowData = {
         label: "Gross Profit Margin",
-        weight: "12%"
+        weight: 12
     };
     companyList.forEach((company) => {
         grossProfitRow[company.ticker] = company.profitability.grossProfitMargin;
@@ -34,7 +34,7 @@ const netProfit = function(
 ) : RowData {
     let netProfitRow: RowData = {
         label: "Net Profit Margin",
-        weight: "4%"
+        weight: 4
     };
     companyList.forEach((company) => {
         netProfitRow[company.ticker] = company.profitability.netProfitMargin;
@@ -47,7 +47,7 @@ const returnOnEquity = function(
 ) : RowData {
     let roeRow: RowData = {
         label: "Return on Equity",
-        weight: "4%"
+        weight: 4
     };
     companyList.forEach((company) => {
         roeRow[company.ticker] = company.profitability.returnOnEquity;
@@ -60,7 +60,7 @@ const returnOnInvestment = function(
 ) : RowData {
     let roiRow: RowData = {
         label: "Return on Investment",
-        weight: "4%"
+        weight: 4
     };
     companyList.forEach((company) => {
         roiRow[company.ticker] = company.profitability.returnOnInvestment;
