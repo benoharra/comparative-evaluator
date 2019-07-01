@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { createElement, FunctionComponent, useState } from 'react';
+import { createElement, FunctionComponent } from 'react';
 
 interface Props {
     onAddCompany: () => void;
@@ -8,7 +8,7 @@ interface Props {
 
 export const AddCompanyButton: FunctionComponent<Props> = (props: Props): any => {
 
-    function onButtonClicked(event: any) {
+    function onButtonClicked(event: React.MouseEvent<HTMLButtonElement>) {
         props.onAddCompany();
     }
 

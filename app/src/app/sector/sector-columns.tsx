@@ -10,12 +10,15 @@ import { Factor } from './input/cell/factor';
 
 import { Weight } from './input/cell/weight';
 
+import { CompanyNameHeader } from './input/cell/company-header';
+
 import { AddCompanyButton } from './input/cell/add-company';
 
 
 export const getSectorColumns = function(
     companyList: CompanyProps[],
-    onUpdateColumns: () => void
+    onUpdateColumns: () => void,
+    onRemoveColumn: (companyName: string) => void
 ): any {
     let columns: any[] = [{Header: "", accessor: "label"}];
 
@@ -23,7 +26,7 @@ export const getSectorColumns = function(
     companyList.forEach(
         (company: CompanyProps) => 
         columns.push({
-            Header: `${company.name} (${company.ticker})`,
+            Header: () => <CompanyNameHeader companyHeader={company} onRemoveCompany={onRemoveColumn} />,
             accessor: company.ticker,
             minWidth: 140,
             Cell: (cellInfo: CellInfo) => <Factor value={cellInfo.value}/>
