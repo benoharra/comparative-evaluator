@@ -3,6 +3,7 @@ import * as React from 'react';
 import { createElement, FunctionComponent, useState } from 'react';
 
 interface Props {
+    // Decouple company input and set a callback function to update ticker?
     companyHeader: {
         name: string;
         ticker: string;
@@ -11,13 +12,13 @@ interface Props {
 }
 
 export const CompanyNameHeader: FunctionComponent<Props> = (props: Props): any => {
-    // Should the state be controlled at this level?
     const [companyHeader, setCompanyHeader] = useState(props.companyHeader);
 
     function setNewHeader(input: string) {
-        props.companyHeader.name = input.substring(0, input.indexOf("("));
-        props.companyHeader.ticker = input.substring(input.indexOf("("));
-        setCompanyHeader(props.companyHeader);
+        setCompanyHeader({
+            name: input.substring(0, input.indexOf("(")).trim(),
+            ticker: input.substring(input.indexOf("(") + 1, input.length - 1).trim()
+        });
     }
 
     function onInputChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -33,7 +34,7 @@ export const CompanyNameHeader: FunctionComponent<Props> = (props: Props): any =
             <input
                 style={{textAlign:'center'}}
                 type="text"
-                value={`${props.companyHeader.name} (${props.companyHeader.ticker})`}
+                value={`${companyHeader.name} (${companyHeader.ticker})`}
                 onChange={onInputChange}
             />
             <button 

@@ -26,7 +26,10 @@ export const getSectorColumns = function(
     companyList.forEach(
         (company: CompanyProps) => 
         columns.push({
-            Header: () => <CompanyNameHeader companyHeader={company} onRemoveCompany={onRemoveColumn} />,
+            Header: () => <CompanyNameHeader 
+                            companyHeader={company}
+                            onRemoveCompany={onRemoveColumn} 
+                          />,
             accessor: company.ticker,
             minWidth: 140,
             Cell: (cellInfo: CellInfo) => <Factor value={cellInfo.value}/>

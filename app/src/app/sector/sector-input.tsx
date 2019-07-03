@@ -21,18 +21,19 @@ interface Props {
 }
 
 export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
-    const tableData = buildSectorRowData(props.companyList);
-
+    var companies = props.companyList;
     const [tableColumns, setTableColumns] = useState(getSectorColumns(props.companyList, addColumn, removeColumn));
 
+    const tableData = buildSectorRowData(companies);
+
     function addColumn() {
-        props.companyList.push(blankCompany);
-        setTableColumns(getSectorColumns(props.companyList, addColumn, removeColumn));
+        companies.push(blankCompany);
+        setTableColumns(getSectorColumns(companies, addColumn, removeColumn));
     }
 
     function removeColumn(companyName: string) {
-        props.companyList = props.companyList.filter((company) => company.name !== companyName);
-        setTableColumns(getSectorColumns(props.companyList, addColumn, removeColumn));
+        companies = companies.filter((company: CompanyProps) => company.name !== companyName);
+        setTableColumns(getSectorColumns(companies, addColumn, removeColumn));
     }
 
     return (
