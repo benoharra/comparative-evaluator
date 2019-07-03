@@ -3,11 +3,13 @@ import * as React from 'react';
 import { createElement,
          FunctionComponent,
          ReactNode, 
-         useState
+         useState,
+         useEffect
         } from 'react';
 import { CompanyProps } from './data-mocker'
 import { getSectorColumns } from './sector-columns';
 import { buildSectorRowData } from './sector-row-data';
+import { blankCompany } from './data-mocker';
 
 import { Column } from 'react-table';
 
@@ -19,10 +21,20 @@ interface Props {
 }
 
 export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
-    const [tableData, setTableData] = useState(buildSectorRowData(props.companyList));
+    var companies = props.companyList;
+    const [tableColumns, setTableColumns] = useState(getSectorColumns(props.companyList, addColumn, removeColumn));
 
-    // Columns will be state controlled in the future as well
-    const tableColumns = getSectorColumns(props.companyList);
+    const tableData = buildSectorRowData(companies);
+
+    function addColumn() {
+        companies.push(blankCompany);
+        setTableColumns(getSectorColumns(companies, addColumn, removeColumn));
+    }
+
+    function removeColumn(companyName: string) {
+        companies = companies.filter((company: CompanyProps) => company.name !== companyName);
+        setTableColumns(getSectorColumns(companies, addColumn, removeColumn));
+    }
 
     return (
         <div>

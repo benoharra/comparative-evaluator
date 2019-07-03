@@ -38,6 +38,37 @@ export interface CompanyProps {
     efficiency: Efficiency;
 }
 
+export const blankCompany: CompanyProps =
+    {
+        name: "New Company",
+        ticker: "Blank",
+        profitability: {
+            grossProfitMargin: 0,
+            netProfitMargin: 0,
+            returnOnEquity: 0,
+            returnOnInvestment: 0
+        },
+        liquidity: {
+            quickRatio: 0,
+            currentRatio: 0
+        },
+        leverage: {
+            debtToEquity: 0,
+            interestCoverage: 0
+        },
+        growth: {
+            oneYearEps: 0,
+            oneYearRev: 0,
+            fiveYearEps: 0,
+            fiveYearRev: 0
+        },
+        efficiency: {
+            receivableTurnover: 0,
+            assetTurnover: 0,
+            inventoryTurnover: 0
+        }
+    };
+
 export const testCompanies: CompanyProps[] = [
     {
         name: "Test1",
@@ -66,7 +97,7 @@ export const testCompanies: CompanyProps[] = [
             receivableTurnover: 2.3,
             assetTurnover: 0.5,
             inventoryTurnover: 1.2
-        }    
+        }
     },
     {
         name: "Test2",
@@ -95,6 +126,6 @@ export const testCompanies: CompanyProps[] = [
             receivableTurnover: 2.3,
             assetTurnover: 0.5,
             inventoryTurnover: 1.2
-        }  
+        }
     }
 ];
