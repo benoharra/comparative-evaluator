@@ -1,11 +1,13 @@
 import { RowData } from './../sector-row-data';
 import { CompanyProps } from './../data-mocker';
+import { Constants } from './../../constants';
+
 
 export const buildProfitMetrics = function(
     companyList: CompanyProps[]
 ) : RowData[] {
     let allProfitRows: RowData[] = [{
-        label: "Profitability",
+        label: Constants.PROFITABILITY,
         weight: 24
     }];
     allProfitRows.push(grossProfit(companyList));
@@ -20,7 +22,7 @@ const grossProfit = function(
     companyList: CompanyProps[]
 ) : RowData {
     let grossProfitRow: RowData = {
-        label: "Gross Profit Margin",
+        label: Constants.GROSS_PROFIT,
         weight: 12
     };
     companyList.forEach((company) => {
@@ -33,7 +35,7 @@ const netProfit = function(
     companyList: CompanyProps[]
 ) : RowData {
     let netProfitRow: RowData = {
-        label: "Net Profit Margin",
+        label: Constants.NET_PROFIT,
         weight: 4
     };
     companyList.forEach((company) => {
@@ -46,7 +48,7 @@ const returnOnEquity = function(
     companyList: CompanyProps[]
 ) : RowData {
     let roeRow: RowData = {
-        label: "Return on Equity",
+        label: Constants.ROE,
         weight: 4
     };
     companyList.forEach((company) => {
@@ -59,7 +61,7 @@ const returnOnInvestment = function(
     companyList: CompanyProps[]
 ) : RowData {
     let roiRow: RowData = {
-        label: "Return on Investment",
+        label: Constants.ROI,
         weight: 4
     };
     companyList.forEach((company) => {

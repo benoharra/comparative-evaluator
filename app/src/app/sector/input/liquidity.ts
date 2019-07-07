@@ -1,11 +1,12 @@
 import { RowData } from './../sector-row-data';
 import { CompanyProps } from './../data-mocker';
+import { Constants } from './../../constants';
 
 export const buildLiquidityMetrics = function(
     companyList: CompanyProps[]
 ) : RowData[] {
     let allLiquidityRows: RowData[] = [{
-        label: "Liquidity",
+        label: Constants.LIQUIDITY,
         weight: 10
     }];
     allLiquidityRows.push(quickRatio(companyList));
@@ -18,7 +19,7 @@ const quickRatio = function(
     companyList: CompanyProps[]
 ) : RowData {
     let quickRatioRow: RowData = {
-        label: "Quick Ratio",
+        label: Constants.QUICK_RATIO,
         weight: 5
     };
     companyList.forEach((company) => {
@@ -31,7 +32,7 @@ const currentRatio = function(
     companyList: CompanyProps[]
 ) : RowData {
     let currentRatioRow: RowData = {
-        label: "Current Ratio",
+        label: Constants.CURRENT_RATIO,
         weight: 5
     };
     companyList.forEach((company) => {
