@@ -5,7 +5,7 @@ import main.model.Factor
 
 class CalculationUtils {
 
-    val percentageCutoff : Float = .05f
+    private val percentageCutoff : Float = .05f
 
 
     fun buildRankings(companies : List<Company>, weights : Map<String, Float>) : Map<String, Float> {
@@ -16,10 +16,10 @@ class CalculationUtils {
     }
 
     fun buildFactor(factorName: String, companies: List<Pair<String, Map<String, Factor>>>) : Pair<String, Map<String, Factor>> =
-        Pair(factorName, companies.map{it.first to it.second[factorName]}
+        Pair(factorName, companies.map{it.first to it.second[factorName]})
 
 
-    fun assignRankings (parameters: Map<String, Float>, mostToLeast: Boolean = true) : Map<String, Int> {
+    fun assignRankings(parameters: Map<String, Float>, mostToLeast: Boolean = true) : Map<String, Int> {
         var sortedList : List<Pair<String, Float>> = parameters.toList().sortedBy { (_, value) -> value }
         var rankedStocks : MutableMap<String, Int> = HashMap()
         for((i, stock) in sortedList.withIndex()) {
