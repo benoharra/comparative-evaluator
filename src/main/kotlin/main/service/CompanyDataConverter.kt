@@ -23,16 +23,16 @@ class CompanyDataConverter {
     }
 
     private fun addLiquidityFactors(liquidity: Liquidity?, factors: MutableMap<String, Factor>) {
-        liquidity.quickRatio?.let{factors[Factor.QUICK_RATIO] = Factor(liquidity.quickRatio)}
-        liquidity.currentRatio?.let{factors[Factor.CURRENT_RATIO] = Factor(liquidity.currentRatio)}
+        liquidity?.quickRatio?.let{factors[Factor.QUICK_RATIO] = Factor(liquidity.quickRatio)}
+        liquidity?.currentRatio?.let{factors[Factor.CURRENT_RATIO] = Factor(liquidity.currentRatio)}
     }
 
     private fun addLeverageFactors(leverage: Leverage?, factors: MutableMap<String, Factor>) {
-        leverage.debtToEquity?.let{factors[Factor.DEBT_TO_EQUITY] = Factor(leverage.debtToEquity,
+        leverage?.debtToEquity?.let{factors[Factor.DEBT_TO_EQUITY] = Factor(leverage.debtToEquity,
                                                                            tolerancePercentage = .1F,
                                                                            sortedHighestToLowest = false)}
 
-        leverage.interestCoverage?.let{factors[Factor.INTEREST_COVERAGE] = Factor(leverage.interestCoverage,
+        leverage?.interestCoverage?.let{factors[Factor.INTEREST_COVERAGE] = Factor(leverage.interestCoverage,
                                                                                   tolerancePercentage = .1F)}
     }
 

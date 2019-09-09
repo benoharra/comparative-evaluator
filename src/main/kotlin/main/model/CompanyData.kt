@@ -1,15 +1,20 @@
 package main.model
 
+import org.springframework.data.annotation.Id
+import org.springframework.data.annotation.TypeAlias
 import java.time.LocalDate
 
+@TypeAlias("industry")
 data class Industry(
-        val name: String,
+        @Id val name: String,
         val dateAdded: LocalDate,
         val companies: List<Company>
 )
 
+@TypeAlias("company")
 data class Company(
         val name: String,
+        @Id val ticker: String,
         val pe: Float,
         val profitability: Profitability?,
         val liquidity: Liquidity?,
