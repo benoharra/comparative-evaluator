@@ -8,7 +8,8 @@ import java.time.LocalDate
 data class Industry(
         @Id val name: String,
         val dateAdded: LocalDate,
-        val companies: List<Company>
+        val companies: List<Company>,
+        val weights: Map<String, Float>
 )
 
 @TypeAlias("company")

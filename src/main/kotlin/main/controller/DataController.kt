@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController
 class DataController {
 
     @PostMapping("/submit")
-    fun submitCompanies(sector: String,
+    fun submitCompanies(industry: String,
                         companies: List<Company>,
                         weights: Map<String, Float>) : Map<String, Float> =
 
