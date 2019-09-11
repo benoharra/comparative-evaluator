@@ -1,6 +1,8 @@
 package main.model
 
-class Factor(val value: Float, val tolerancePercentage: Float = 0.05F, val sortedHighestToLowest: Boolean = true) {
+class Factor(val value: Float,
+             val tolerancePercentage: Float = 0.05F,
+             val sortedHighestToLowest: Boolean = true) {
 
     companion object {
         const val GROSS_PROFIT = "grossProfitMargin"
