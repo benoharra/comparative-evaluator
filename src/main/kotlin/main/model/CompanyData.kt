@@ -7,12 +7,20 @@ import java.time.LocalDate
 @TypeAlias("industry")
 data class Industry(
         @Id val name: String,
-        val dateAdded: LocalDate,
+        val dateUpdated: LocalDate,
         val companies: List<Company>,
         val weights: Map<String, Float>
 )
 
 @TypeAlias("company")
+data class CompanyAnalysis(
+        @Id val ticker: String,
+        val dateUpdated: LocalDate,
+        val industries: MutableSet<String>,
+        val companyInfo: Company
+        // Insert Recommendation data here later
+)
+
 data class Company(
         val name: String,
         @Id val ticker: String,
@@ -23,3 +31,4 @@ data class Company(
         val efficiency: Efficiency?,
         val growth: Growth?
 )
+
