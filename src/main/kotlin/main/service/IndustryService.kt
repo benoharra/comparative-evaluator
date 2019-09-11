@@ -1,6 +1,5 @@
 package main.service
 
-import main.model.Company
 import main.model.CompanyRepository
 import main.model.Industry
 import main.model.IndustryRepository
@@ -10,13 +9,13 @@ import org.springframework.stereotype.Service
 @Service("industryService")
 class IndustryService @Autowired constructor(
         private val industryRepository: IndustryRepository,
-        private val companyRepository: CompanyRepository
+        private val companyService: CompanyService
 ){
     fun submit(industry: Industry) {
         // Save the industry as a whole
         industryRepository.save(industry)
         // Save individual companies so they can be found later
-        industry.companies.forEach{companyRepository.save(it)}
+        industry.companies.forEach{companyService.addCompany(it, industry.name)}
     }
 
     fun getAllIndustries() : List<Industry> =
@@ -25,6 +24,4 @@ class IndustryService @Autowired constructor(
     fun getIndustry(name: String) : Industry? =
             industryRepository.findById(name).orElse(null)
 
-    fun getCompany(ticker: String) : Company? =
-            companyRepository.findById(ticker).orElse(null)
 }
