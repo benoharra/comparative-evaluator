@@ -16,11 +16,7 @@ fun mapAllFactors(company: Company): Map<String, Factor> {
     return factors
 }
 
-fun convertCompanyNames(companyNames: List<CompanyName>, factors: Map<String, Float>): List<Company> =
-        companyNames.map { buildCompany(it.name, it.ticker, factors) }
-
-
-private fun buildCompany(name: String, ticker: String, factors: Map<String, Float>): Company =
+fun buildCompany(name: String, ticker: String, factors: Map<String, Float>): Company =
         Company(
                 name,
                 ticker,
