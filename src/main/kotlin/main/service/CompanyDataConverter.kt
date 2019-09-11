@@ -1,6 +1,5 @@
 package main.service
 
-import main.controller.CompanyName
 import main.model.*
 
 
@@ -20,7 +19,7 @@ fun buildCompany(name: String, ticker: String, factors: Map<String, Float>): Com
         Company(
                 name,
                 ticker,
-                factors["$ticker.${Factor.PE}"].orElse(0),
+                factors.getOrElse("$ticker.${Factor.PE}") {0F},
                 Profitability(
                         factors["$ticker.${Factor.GROSS_PROFIT}"],
                         factors["$ticker.${Factor.NET_PROFIT}"],
