@@ -2,7 +2,7 @@ package main.model
 
 class Factor(val value: Float,
              val tolerancePercentage: Float = 0.05F,
-             val sortedHighestToLowest: Boolean = true) {
+             val sortedHighestToLowest: Boolean = true) : Comparable<Factor> {
 
     companion object {
         const val GROSS_PROFIT = "grossProfitMargin"
@@ -22,12 +22,15 @@ class Factor(val value: Float,
         const val PE = "priceOverEarnings"
     }
 
-    fun compare(nextValue: Float): Boolean =
-            if (sortedHighestToLowest) {
-                (value - nextValue).div(value) > tolerancePercentage
-            } else {
-                (nextValue - value).div(nextValue) > tolerancePercentage
-            }
+    override fun compareTo(other: Factor) =
+            if(sortedHighestToLowest)
+                other.value.compareTo(value)
+            else
+                value.compareTo(other.value)
 
-
+    fun isSameRank(previous: Factor) : Boolean =
+            if(sortedHighestToLowest)
+                (previous.value - value).div(previous.value) < tolerancePercentage
+            else
+                (value - previous.value).div(value) < tolerancePercentage
 }
