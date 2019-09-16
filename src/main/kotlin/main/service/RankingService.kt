@@ -3,8 +3,10 @@ package main.service
 import main.controller.RankingsView
 import main.model.*
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Service
 import java.time.LocalDate
 
+@Service("rankingService")
 class RankingService @Autowired constructor(
         private val industryService: IndustryService,
         private val rankingRepository: RankingRepository

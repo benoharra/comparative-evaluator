@@ -2,6 +2,8 @@ package main.service
 
 import main.controller.CompanyName
 import main.model.*
+import kotlin.math.max
+import kotlin.math.min
 
 fun buildRankingsResults(companies: List<Company>,
                          rankingValues: Map<String, Float>,
@@ -38,8 +40,51 @@ fun calculateAverageRankings(tickers: List<String>,
     return averageRankings
 }
 
-fun calculateRecommendation(companyRanks: Map<String, Float>, peValues: Map<String, Float>): Map<String, Recommendation> =
-        mutableMapOf()
+// Recommendation is based on a 0-10 scale, with 10 being strong buy and 0 being strong sell
+fun calculateRecommendation(companyRanks: Map<String, Float>, peValues: Map<String, Float>): Map<String, Recommendation>  {
+    // Sort the companies by smallest to largest rank
+    val orderedRanks: List<Pair<String, Float>> = companyRanks.map{Pair(it.key, it.value)}.sortedBy{it.second}
+
+    val numberOfCompanies: Float = orderedRanks.size.toFloat()
+
+    // Calculate the average PE for the industry
+    val averagePe = peValues.values.average()
+
+    val recommendations: MutableMap<String, Recommendation> = mutableMapOf()
+
+    // Recommendations are a combination of:
+    // how high the companies average ranking is (6)
+    // and their PE compared to average (4)
+    for(currentCompany in orderedRanks) {
+        var buyRating = 0F
+
+        // Add the ranking portion of the companys buy rating, (N - N*(R-1)/(N-1))/N
+        buyRating += 6F.times(
+                numberOfCompanies - (currentCompany.second - 1).div(numberOfCompanies - 1))
+                      .div(numberOfCompanies)
+
+        // Add the PE portion of the companys buy rating, percentage scale where 25% better than average is max rating (4),
+        // average PE is rating 2, and 25% below average PE or worse is 0
+        val pe = peValues[currentCompany.first] ?: 1000F
+        buyRating += if(pe < averagePe)
+            min(4F, (2 + 8F * (averagePe - pe).div(averagePe)).toFloat())
+        else
+            max(0F, (2 - 8F * (pe - averagePe).div(averagePe)).toFloat())
+
+        recommendations[currentCompany.first] = Recommendation(buyRating, mapBuyRating(buyRating))
+    }
+
+    return recommendations
+}
+
+private fun mapBuyRating(rating: Float) : String =
+        when {
+            rating > 8F -> "Strong Buy"
+            rating > 6.5F -> "Buy"
+            rating > 5F -> "Hold"
+            rating > 3.5F -> "Avoid"
+            else -> "Strong Sell"
+        }
 
 private fun rankFactor(factorName: String,
                companyTickers: List<String>,
