@@ -1,6 +1,5 @@
 package main.service
 
-import main.model.CompanyRepository
 import main.model.Industry
 import main.model.IndustryRepository
 import main.model.Recommendation

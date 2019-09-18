@@ -58,12 +58,12 @@ fun calculateRecommendation(companyRanks: Map<String, Float>, peValues: Map<Stri
     for(currentCompany in orderedRanks) {
         var buyRating = 0F
 
-        // Add the ranking portion of the companys buy rating, (N - N*(R-1)/(N-1))/N
+        // Add the ranking portion of the company's buy rating, (N - N*(R-1)/(N-1))/N
         buyRating += 6F.times(
                 numberOfCompanies - (currentCompany.second - 1).div(numberOfCompanies - 1))
                       .div(numberOfCompanies)
 
-        // Add the PE portion of the companys buy rating, percentage scale where 25% better than average is max rating (4),
+        // Add the PE portion of the company's buy rating, percentage scale where 25% better than average is max rating (4),
         // average PE is rating 2, and 25% below average PE or worse is 0
         val pe = peValues[currentCompany.first] ?: 1000F
         buyRating += if(pe < averagePe)
