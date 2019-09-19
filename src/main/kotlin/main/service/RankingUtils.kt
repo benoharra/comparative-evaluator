@@ -60,7 +60,8 @@ fun calculateRecommendation(companyRanks: Map<String, Float>, peValues: Map<Stri
 
         // Add the ranking portion of the company's buy rating, (N - N*(R-1)/(N-1))/N
         buyRating += 6F.times(
-                numberOfCompanies - (currentCompany.second - 1).div(numberOfCompanies - 1))
+                (numberOfCompanies -
+                        numberOfCompanies.times(currentCompany.second - 1).div(numberOfCompanies - 1)))
                       .div(numberOfCompanies)
 
         // Add the PE portion of the company's buy rating, percentage scale where 25% better than average is max rating (4),
@@ -79,10 +80,10 @@ fun calculateRecommendation(companyRanks: Map<String, Float>, peValues: Map<Stri
 
 private fun mapBuyRating(rating: Float) : String =
         when {
-            rating > 8F -> "Strong Buy"
-            rating > 6.5F -> "Buy"
-            rating > 5F -> "Hold"
-            rating > 3.5F -> "Avoid"
+            rating >= 8F -> "Strong Buy"
+            rating >= 6.5F -> "Buy"
+            rating >= 5F -> "Hold"
+            rating >= 3.5F -> "Avoid"
             else -> "Strong Sell"
         }
 
@@ -105,7 +106,7 @@ private fun rankFactor(factorName: String,
     var lastFactor: Factor = sortedFactors[0].second
 
     // Iterate through the companies and add their rank to the list, checking for values that should be the same rank
-    for (i in 1 until sortedFactors.size - 1) {
+    for (i in 1 until sortedFactors.size) {
         val next: Pair<String, Factor> = sortedFactors[i]
         if (!next.second.isSameRank(lastFactor)) {
             lastFactor = next.second

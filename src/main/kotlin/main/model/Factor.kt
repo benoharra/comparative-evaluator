@@ -29,8 +29,9 @@ class Factor(val value: Float,
                 value.compareTo(other.value)
 
     fun isSameRank(previous: Factor) : Boolean =
-            if(sortedHighestToLowest)
-                (previous.value - value).div(previous.value) < tolerancePercentage
-            else
-                (value - previous.value).div(value) < tolerancePercentage
+            when {
+                previous.value == value -> true
+                sortedHighestToLowest -> (previous.value - value).div(previous.value) < tolerancePercentage
+                else -> (value - previous.value).div(value) < tolerancePercentage
+            }
 }
