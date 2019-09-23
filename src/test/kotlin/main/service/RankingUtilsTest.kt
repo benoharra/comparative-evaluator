@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import org.junit.runner.RunWith
 import org.springframework.test.context.junit4.SpringRunner
 import java.lang.IllegalStateException
@@ -24,7 +25,7 @@ class RankingUtilsTest {
         private var rankings: MutableMap<String, Float> = mutableMapOf()
         private var recommendations: MutableMap<String, Recommendation> = mutableMapOf()
 
-        @BeforeEach
+        @BeforeEach()
         fun setup() {
             companies = companyList()
             rankings = companyRanks(companies)

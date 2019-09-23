@@ -1,14 +1,21 @@
 package main.service
 
-import main.model.Company
-import main.model.Factor
-import main.model.Recommendation
+import main.model.*
+import java.time.LocalDate
 
 fun companyList() : MutableList<Company> =
         mutableListOf(
                 Company("Test1", "t1", 1.0F, null, null, null, null, null),
                 Company("Test2", "t2", 2.0F, null, null, null, null, null),
                 Company("Test3", "t3", 3.0F, null, null, null, null, null)
+        )
+
+fun industry(companies: List<Company>) : Industry =
+        Industry(
+                "Test",
+                LocalDate.now(),
+                companies,
+                mapOf()
         )
 
 fun companyRanks(companies: List<Company>) : MutableMap<String, Float>{
@@ -83,3 +90,10 @@ fun companyFactorsWithinTolerances() : MutableMap<String, MutableMap<String, Fac
             Pair(tickers[3],
                     mutableMapOf(Pair(Factor.GROSS_PROFIT, Factor(.35F, tolerancePercentage = .5F)))))
 }
+
+fun industryRanking() : IndustryRanking =
+        IndustryRanking(
+                "test",
+                LocalDate.now(),
+                listOf()
+        )

@@ -1,5 +1,6 @@
 package main.service
 
+import main.controller.CompanyName
 import main.controller.RankingsView
 import main.model.*
 import org.springframework.beans.factory.annotation.Autowired
@@ -46,9 +47,12 @@ class RankingService @Autowired constructor(
                     industryRanking.dateUpdated,
                     industryRanking.ranking,
                     // Sort the rankings by highest buy rating and set the best buy to the highest recommended company
-                    industryRanking.ranking
-                            .sortedBy{it.recommendation.buyRating}.reversed()
-                            [0].companyName
+                    industryRanking.ranking.filter{it.recommendation.buyRating >= 6.5F}
+                            .maxBy{it.recommendation.buyRating}?.companyName
+                            ?: noBuys
             )
+
+    private val noBuys: CompanyName =
+            CompanyName("None", "NA")
 
 }
