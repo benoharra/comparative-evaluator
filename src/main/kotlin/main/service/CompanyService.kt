@@ -2,6 +2,7 @@ package main.service
 
 import main.controller.CompanyListEntry
 import main.controller.CompanyName
+import main.controller.CompanyView
 import main.model.Company
 import main.model.CompanyAnalysis
 import main.model.CompanyRepository
@@ -26,8 +27,7 @@ class CompanyService @Autowired constructor(
                             company.ticker,
                             LocalDate.now(),
                             mutableSetOf(),
-                            company
-                ))
+                            company))
 
         // Copy the fields and update the date and most recent company factor data
         val finalCompany = currentCompany.copy(
@@ -40,6 +40,10 @@ class CompanyService @Autowired constructor(
         }
         companyRepository.save(finalCompany)
     }
+
+    fun viewCompany(ticker: String): CompanyView? =
+            companyRepository.findById(ticker).orElse(null)
+                ?.toCompanyView()
 }
 
 private fun CompanyAnalysis.toCompanyListEntry(): CompanyListEntry =
@@ -49,4 +53,13 @@ private fun CompanyAnalysis.toCompanyListEntry(): CompanyListEntry =
                         ticker
                 ),
                 this.industries
+        )
+
+fun CompanyAnalysis.toCompanyView() =
+        CompanyView(
+                CompanyName(this.companyInfo.name, this.ticker),
+                this.dateUpdated,
+                this.industries,
+                this.companyInfo,
+                this.recommendation
         )

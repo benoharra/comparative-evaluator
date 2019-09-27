@@ -25,5 +25,11 @@ class IndustryController @Autowired constructor(
     fun performAnalysis(@RequestBody industryInput: IndustryInput) : RankingsView =
             rankingService.performRanking(convertIndustry(industryInput))
 
+    @GetMapping("/view")
+    fun viewIndustry(@RequestParam name: String) : IndustryView =
+            IndustryView(
+                    industryService.getIndustry(name),
+                    rankingService.getIndustryRanking(name)
+            )
 
 }

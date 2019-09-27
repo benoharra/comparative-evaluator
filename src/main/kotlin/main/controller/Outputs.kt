@@ -1,6 +1,9 @@
 package main.controller
 
+import main.model.Company
+import main.model.Industry
 import main.model.Ranking
+import main.model.Recommendation
 import java.time.LocalDate
 
 data class CompanyListEntry(
@@ -13,4 +16,17 @@ data class RankingsView(
         val dateUpdated: LocalDate,
         val rankings: List<Ranking>,
         val bestBuy: CompanyName
+)
+
+data class IndustryView(
+        val industry: Industry?,
+        val rankings: RankingsView?
+)
+
+data class CompanyView(
+        val name: CompanyName,
+        val dateUpdated: LocalDate,
+        val industries: Set<String>,
+        val data: Company,
+        val recommendation: Recommendation?
 )
