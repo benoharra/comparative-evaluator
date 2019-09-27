@@ -24,11 +24,10 @@ class CompanyService @Autowired constructor(
         // Find the current company in the DB if present, otherwise initialize a default
         val currentCompany = companyRepository.findById(company.ticker)
                 .orElse(CompanyAnalysis(
-                        company.ticker,
-                        LocalDate.now(),
-                        mutableSetOf(),
-                        company
-                ))
+                            company.ticker,
+                            LocalDate.now(),
+                            mutableSetOf(),
+                            company))
 
         // Copy the fields and update the date and most recent company factor data
         val finalCompany = currentCompany.copy(
