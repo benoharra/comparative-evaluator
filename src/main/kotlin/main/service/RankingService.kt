@@ -38,16 +38,20 @@ class RankingService @Autowired constructor(
         rankingRepository.save(industryRanking)
         industryService.submitAfterRanking(industry, recommendations)
 
-        return buildRankingsView(industryRanking)
+        return industryRanking.toRankingView()
     }
 
-    private fun buildRankingsView(industryRanking: IndustryRanking) : RankingsView =
+    fun getIndustryRanking(industryName: String) : RankingsView? =
+        rankingRepository.findById(industryName).orElse(null)
+                ?.toRankingView()
+
+    private fun IndustryRanking.toRankingView() : RankingsView =
             RankingsView(
-                    industryRanking.industryName,
-                    industryRanking.dateUpdated,
-                    industryRanking.ranking,
+                    this.industryName,
+                    this.dateUpdated,
+                    this.ranking,
                     // Sort the rankings by highest buy rating and set the best buy to the highest recommended company
-                    industryRanking.ranking.filter{it.recommendation.buyRating >= 6.5F}
+                    this.ranking.filter{it.recommendation.buyRating >= 6.5F}
                             .maxBy{it.recommendation.buyRating}?.companyName
                             ?: noBuys
             )

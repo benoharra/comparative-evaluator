@@ -1,5 +1,7 @@
 package main.service
 
+import main.controller.CompanyName
+import main.controller.CompanyView
 import main.model.*
 
 
@@ -44,7 +46,6 @@ fun buildCompany(name: String, ticker: String, factors: Map<String, Float>): Com
                         factors["$ticker.${Factor.ONE_YEAR_EPS}"]
                 )
         )
-
 
 private fun addProfitabilityFactors(profitability: Profitability?, factors: MutableMap<String, Factor>) {
     profitability?.grossProfitMargin?.let { factors[Factor.GROSS_PROFIT] = Factor(profitability.grossProfitMargin) }
