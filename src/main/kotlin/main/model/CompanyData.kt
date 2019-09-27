@@ -17,8 +17,8 @@ data class CompanyAnalysis(
         @Id val ticker: String,
         val dateUpdated: LocalDate,
         val industries: MutableSet<String>,
-        val companyInfo: Company
-        // Insert Recommendation data here later
+        val companyInfo: Company,
+        val recommendation: Recommendation? = null
 )
 
 data class Company(

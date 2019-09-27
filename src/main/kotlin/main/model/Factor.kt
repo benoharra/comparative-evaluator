@@ -2,7 +2,7 @@ package main.model
 
 class Factor(val value: Float,
              val tolerancePercentage: Float = 0.05F,
-             val sortedHighestToLowest: Boolean = true) {
+             val sortedHighestToLowest: Boolean = true) : Comparable<Factor> {
 
     companion object {
         const val GROSS_PROFIT = "grossProfitMargin"
@@ -15,19 +15,23 @@ class Factor(val value: Float,
         const val RECEIVABLE_TURNOVER = "receivableTurnover"
         const val INVENTORY_TURNOVER = "inventoryTurnover"
         const val ASSET_TURNOVER = "assetTurnover"
-        const val FIVE_YEAR_SALES = "fiveYearSalesGrowth"
-        const val ONE_YEAR_SALES = "oneYearSalesGrowth"
+        const val FIVE_YEAR_SALES = "fiveYearSales"
+        const val ONE_YEAR_SALES = "oneYearSales"
         const val FIVE_YEAR_EPS = "fiveYearEps"
         const val ONE_YEAR_EPS = "oneYearEps"
         const val PE = "priceOverEarnings"
     }
 
-    fun compare(nextValue: Float): Boolean =
-            if (sortedHighestToLowest) {
-                (value - nextValue).div(value) > tolerancePercentage
-            } else {
-                (nextValue - value).div(nextValue) > tolerancePercentage
+    override fun compareTo(other: Factor) =
+            if(sortedHighestToLowest)
+                other.value.compareTo(value)
+            else
+                value.compareTo(other.value)
+
+    fun isSameRank(previous: Factor) : Boolean =
+            when {
+                previous.value == value -> true
+                sortedHighestToLowest -> (previous.value - value).div(previous.value) < tolerancePercentage
+                else -> (value - previous.value).div(value) < tolerancePercentage
             }
-
-
 }
