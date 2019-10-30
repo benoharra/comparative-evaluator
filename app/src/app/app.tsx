@@ -7,17 +7,13 @@ import {
   FunctionComponent,
   Fragment} from 'react';
 
-import { SectorInput } from './sector/sector-input';
-import { testCompanies, CompanyProps } from './sector/data-mocker';
+import { HomePage } from './home/home-page';
 
 export const App: FunctionComponent = function() {
-  const companies: CompanyProps[] = testCompanies;
 
   return (
     <Fragment>
-      <h1>Add/Edit a sector</h1>
-      <h2>Test Sector - hard coded data</h2>
-      <SectorInput companyList={companies} />
+      <HomePage />
     </Fragment>
   );
 };
