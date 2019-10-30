@@ -11,9 +11,10 @@ import { getSectorColumns } from './sector-columns';
 import { buildSectorRowData } from './sector-row-data';
 import { blankCompany } from './data-mocker';
 
+import ReactTable from "react-table";
+
 import { Column } from 'react-table';
 
-import ReactTable from "react-table";
 import "react-table/react-table.css";
 
 interface Props {

@@ -7,17 +7,24 @@ import {
   FunctionComponent,
   Fragment} from 'react';
 
-import { SectorInput } from './sector/sector-input';
-import { testCompanies, CompanyProps } from './sector/data-mocker';
+import {
+    BrowserRouter as Router,
+    Switch, Route
+} from 'react-router-dom';
+
+import { HomePage } from './home/home-page';
+import { Industry } from './sector/industry';
+
+
 
 export const App: FunctionComponent = function() {
-  const companies: CompanyProps[] = testCompanies;
 
   return (
-    <Fragment>
-      <h1>Add/Edit a sector</h1>
-      <h2>Test Sector - hard coded data</h2>
-      <SectorInput companyList={companies} />
-    </Fragment>
+    <Router>
+      <Switch>
+        <Route exact path="/" component={HomePage}/>  
+        <Route path="/industry" component={Industry}/>
+      </Switch>
+    </Router>
   );
 };
