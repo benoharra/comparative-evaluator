@@ -18,7 +18,7 @@ import { AddCompanyButton } from './input/cell/add-company';
 
 
 const onWeightChange = function(newWeight: number) {
-
+    // TODO:Edit the factor category weight totals on input change
 }
 
 export const getSectorColumns = function(
