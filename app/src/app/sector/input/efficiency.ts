@@ -1,11 +1,12 @@
 import { RowData } from './../sector-row-data';
 import { CompanyProps } from './../data-mocker';
+import { Constants } from './../../constants';
 
 export const buildEfficiencyMetrics = function(
     companyList: CompanyProps[]
 ) : RowData[] {
     let allEfficiencyRows: RowData[] = [{
-        label: "Efficiency",
+        label: Constants.EFFICIENCY,
         weight: 19
     }];
     allEfficiencyRows.push(receivableTurnover(companyList));
@@ -19,7 +20,7 @@ const receivableTurnover = function(
     companyList: CompanyProps[]
 ) : RowData {
     let receivableTurnoverRow: RowData = {
-        label: "Receivable Turnover",
+        label: Constants.RECEIVABLES_TURN,
         weight: 5
     };
     companyList.forEach((company) => {
@@ -32,7 +33,7 @@ const assetTurnover = function(
     companyList: CompanyProps[]
 ) : RowData {
     let assetTurnoverRow: RowData = {
-        label: "Asset Turnover",
+        label: Constants.ASSET_TURN,
         weight: 6
     };
     companyList.forEach((company) => {
@@ -45,7 +46,7 @@ const inventoryTurnover = function(
     companyList: CompanyProps[]
 ) : RowData {
     let inventoryTurnoverRow: RowData = {
-        label: "Inventory Turnover",
+        label: Constants.INVENTORY_TURN,
         weight: 8
     };
     companyList.forEach((company) => {

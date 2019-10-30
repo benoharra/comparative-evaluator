@@ -1,11 +1,12 @@
 import { RowData } from './../sector-row-data';
 import { CompanyProps } from './../data-mocker';
+import { Constants } from './../../constants';
 
 export const buildGrowthMetrics = function(
     companyList: CompanyProps[]
 ) : RowData[] {
     let allGrowthRows: RowData[] = [{
-        label: "Growth",
+        label: Constants.GROWTH,
         weight: 36
     }];
     allGrowthRows.push(fiveYearRev(companyList));
@@ -20,7 +21,7 @@ const fiveYearRev = function(
     companyList: CompanyProps[]
 ) : RowData {
     let fiveYearRevRow: RowData = {
-        label: "5 yr. Revenue Growth",
+        label: Constants.FIVE_YR_REV,
         weight: 6
     };
     companyList.forEach((company) => {
@@ -33,7 +34,7 @@ const fiveYearEps = function(
     companyList: CompanyProps[]
 ) : RowData {
     let fiveYearEpsRow: RowData = {
-        label: "5 yr. EPS Growth",
+        label: Constants.FIVE_YR_EPS,
         weight: 6
     };
     companyList.forEach((company) => {
@@ -46,7 +47,7 @@ const oneYearRev = function(
     companyList: CompanyProps[]
 ) : RowData {
     let oneYearRevRow: RowData = {
-        label: "1 yr. Revenue Growth",
+        label: Constants.ONE_YR_REV,
         weight: 12
     };
     companyList.forEach((company) => {
@@ -59,7 +60,7 @@ const oneYearEps = function(
     companyList: CompanyProps[]
 ) : RowData {
     let oneYearEpsRow: RowData = {
-        label: "1 yr. EPS Growth",
+        label: Constants.ONE_YR_EPS,
         weight: 12
     };
     companyList.forEach((company) => {
