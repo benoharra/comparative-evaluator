@@ -1,11 +1,12 @@
 import { RowData } from './../sector-row-data';
 import { CompanyProps } from './../data-mocker';
+import { Constants } from './../../constants';
 
 export const buildLeverageMetrics = function(
     companyList: CompanyProps[]
 ) : RowData[] {
     let allLeverageRows: RowData[] = [{
-        label: "Leverage",
+        label: Constants.LEVERAGE,
         weight: 11
     }];
     allLeverageRows.push(debtToEquity(companyList));
@@ -18,7 +19,7 @@ const debtToEquity = function(
     companyList: CompanyProps[]
 ) : RowData {
     let debtToEquityRow: RowData = {
-        label: "Debt to Equity",
+        label: Constants.DEBT_TO_EQUITY,
         weight: 6
     };
     companyList.forEach((company) => {
@@ -31,7 +32,7 @@ const interestCoverage = function(
     companyList: CompanyProps[]
 ) : RowData {
     let interestCoverageRow: RowData = {
-        label: "Interest Coverage",
+        label: Constants.INTEREST_COVERAGE,
         weight: 5
     };
     companyList.forEach((company) => {

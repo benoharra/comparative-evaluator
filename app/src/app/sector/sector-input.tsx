@@ -42,6 +42,7 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
                 data={tableData}
                 columns={tableColumns}
                 defaultPageSize = {20}
+                sortable={false}
             />
         </div>
     );

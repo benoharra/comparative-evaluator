@@ -13,7 +13,7 @@ export const AddCompanyButton: FunctionComponent<Props> = (props: Props): any =>
     }
 
     return (
-        <button onClick={onButtonClicked}>Add Company</button>
+        <button onClick={onButtonClicked}>Add</button>
     )
 
 }
