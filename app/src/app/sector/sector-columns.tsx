@@ -26,6 +26,7 @@ export const getSectorColumns = function(
     onUpdateColumns: () => void,
     onRemoveColumn: (companyName: string) => void
 ): any {
+    // Add the data header names to the first column
     let columns: any[] = [{
                             Header: "", 
                             accessor: "label",
