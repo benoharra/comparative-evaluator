@@ -12,6 +12,7 @@ import {
 } from 'react-router-dom';
 
 import { Industry } from './../sector/industry';
+import { IndustryList } from './industry-list';
 import { testCompanies, CompanyProps } from './../sector/data-mocker';
 
 
@@ -26,13 +27,7 @@ export const HomePage: FunctionComponent<Props> = (props: Props): any => {
     return (
             <div>
                 <h1>Welcome to the Comparative Evaluator!</h1>
-
-                <Link to="/industry">
-                    Industry Data
-                </Link>
+                <IndustryList />
             </div>
-
-
-    
     )
 }

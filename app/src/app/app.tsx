@@ -26,6 +26,5 @@ export const App: FunctionComponent = function() {
         <Route path="/industry" component={Industry}/>
       </Switch>
     </Router>
-  
   );
 };
