@@ -17,6 +17,10 @@ import { RowHeader } from './input/cell/row-header';
 import { AddCompanyButton } from './input/cell/add-company';
 
 
+const onWeightChange = function(newWeight: number) {
+
+}
+
 export const getSectorColumns = function(
     companyList: CompanyProps[],
     onUpdateColumns: () => void,
@@ -38,7 +42,7 @@ export const getSectorColumns = function(
                           />,
             accessor: company.ticker,
             minWidth: 140,
-            Cell: (cellInfo: CellInfo) => <Factor value={cellInfo.value} rowName={cellInfo.original}/>
+            Cell: (cellInfo: CellInfo) => <Factor value={cellInfo.value} rowLabel={cellInfo.original}/>
         }));
 
     // Add the add columns button
@@ -49,7 +53,10 @@ export const getSectorColumns = function(
     columns.push({
         Header: "Weight",
         accessor: "weight",
-        Cell: (cellInfo: CellInfo) => <Weight value={cellInfo.value}/>
+        Cell: (cellInfo: CellInfo) => <Weight 
+                                        value={cellInfo.value}
+                                        rowLabel={cellInfo.original} 
+                                        onChange={onWeightChange}/>
     });
     return columns;
 };

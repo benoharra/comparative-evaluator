@@ -2,11 +2,13 @@ import * as React from 'react';
 
 import { createElement, FunctionComponent, useState } from 'react';
 
+import { RowData } from './../../sector-row-data';
+
 import { Constants } from './../../../constants';
 
 interface Props {
     value: any;
-    rowName: any;
+    rowLabel: RowData;
 }
 
 export const Factor: FunctionComponent<Props> = (props: Props): any => {
@@ -18,7 +20,7 @@ export const Factor: FunctionComponent<Props> = (props: Props): any => {
     }
 
     // If this is a Factor category row, don't resolve any input fields
-    if(Constants.FACTOR_CATEGORIES.has(props.rowName.label)) {
+    if(Constants.FACTOR_CATEGORIES.has(props.rowLabel.label)) {
         return (null);
     } else {
         return (
