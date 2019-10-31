@@ -19,6 +19,7 @@ import {
 import { Industry } from './../sector/industry';
 import { testCompanies, testIndustries, CompanyProps, IndustryProps } from './../sector/data-mocker';
 import { IndustryLink } from './industry-link';
+import { CompanyList } from './company-list';
 
 
 interface Props {
@@ -36,16 +37,25 @@ export const IndustryList: FunctionComponent<Props> = (props: Props): any => {
                 [{
                     Header: "Industry",
                     accessor: "name",
-                    Cell: (cellInfo: CellInfo) => <IndustryLink value={cellInfo.value}/>
+                    Cell: (cellInfo: CellInfo) => (
+                        <Link to="/industry">
+                            {cellInfo.value}
+                        </Link>
+                    )
                 },
-                // {
-                //     Header: "Companies",
-                //     accessor: "companies",
-                //     Cell: (cellInfo: CellInfo) => <p>TestCompanyList</p>
-                // },
+                {
+                    Header: "Companies",
+                    accessor: "companies",
+                    Cell: (cellInfo: CellInfo) => (
+                        <div>
+                            {cellInfo.value.slice(0, Math.min(3, cellInfo.value.length)).join()
+                            .concat(cellInfo.value.length > 3 ? "..." : "")}
+                        </div>
+                    )
+                },
                 {
                     Header: "Date Updated",
-                    accessor: "updated"
+                    accessor: "dateUpdated"
                 }
 
                 ]

@@ -38,5 +38,12 @@ module.exports = () => ({
   plugins: [
     new HtmlWebpackPlugin({ template: './src/index.html' }),
     new WebpackBar()
-  ]
+  ],
+  externals: {
+    'Config': JSON.stringify(process.env.NODE_ENV === 'prod' ? {
+      serverUrl: "http://localhost:8080/comp-eval/" 
+    } : {
+      serverUrl: "http://localhost:8080/comp-eval/"
+    })
+  }
 });
