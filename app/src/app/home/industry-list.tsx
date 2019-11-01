@@ -1,25 +1,21 @@
 import * as React from 'react';
-
 import {
     createElement,
     FunctionComponent,
+    useState,
     ReactNode,
 } from 'react';
 
+import usePromise from 'react-promise';
 import ReactTable from "react-table";
-
 import { Column, CellInfo } from "react-table";
-
-
 import {
     BrowserRouter as Router,
     Switch, Route, Link
 } from 'react-router-dom';
-
-import { Industry } from './../sector/industry';
-import { testCompanies, testIndustries, CompanyProps, IndustryProps } from './../sector/data-mocker';
-import { IndustryLink } from './industry-link';
-import { CompanyList } from './company-list';
+import { testCompanies, testIndustries, CompanyProps } from './../sector/data-mocker';
+import { IndustryProps } from './../dto/server-dtos';
+import { getAllIndustries } from '../services/industry-client';
 
 
 interface Props {
@@ -27,12 +23,15 @@ interface Props {
 }
 
 export const IndustryList: FunctionComponent<Props> = (props: Props): any => {
-    const industries: IndustryProps[] = testIndustries;
+    //const industries: IndustryProps[] = testIndustries;
+    const { value, loading } = usePromise<IndustryProps[]>(getAllIndustries());
 
-
+    if (loading) {
+        return <p>Loading...</p>
+    }
     return (
         <ReactTable
-            data={testIndustries}
+            data={value}
             columns={
                 [{
                     Header: "Industry",
@@ -48,8 +47,9 @@ export const IndustryList: FunctionComponent<Props> = (props: Props): any => {
                     accessor: "companies",
                     Cell: (cellInfo: CellInfo) => (
                         <div>
-                            {cellInfo.value.slice(0, Math.min(3, cellInfo.value.length)).join()
-                            .concat(cellInfo.value.length > 3 ? "..." : "")}
+                            {cellInfo.value.slice(0, Math.min(3, cellInfo.value.length))
+                                .map(cellInfo.value.name).join()
+                                .concat(cellInfo.value.length > 3 ? "..." : "")}
                         </div>
                     )
                 },
@@ -61,5 +61,7 @@ export const IndustryList: FunctionComponent<Props> = (props: Props): any => {
                 ]
             }
         />
+
+
     )
 }
