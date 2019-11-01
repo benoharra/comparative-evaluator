@@ -23,8 +23,8 @@ interface Props {
 }
 
 export const IndustryList: FunctionComponent<Props> = (props: Props): any => {
-    //const industries: IndustryProps[] = testIndustries;
-    const { value, loading } = usePromise<IndustryProps[]>(getAllIndustries());
+    const industryPromise = getAllIndustries();
+    const { value, loading } = usePromise<IndustryProps[]>(industryPromise);
 
     if (loading) {
         return <p>Loading...</p>
@@ -48,7 +48,7 @@ export const IndustryList: FunctionComponent<Props> = (props: Props): any => {
                     Cell: (cellInfo: CellInfo) => (
                         <div>
                             {cellInfo.value.slice(0, Math.min(3, cellInfo.value.length))
-                                .map(cellInfo.value.name).join()
+                                .map((industry: IndustryProps) => industry.name).join()
                                 .concat(cellInfo.value.length > 3 ? "..." : "")}
                         </div>
                     )
