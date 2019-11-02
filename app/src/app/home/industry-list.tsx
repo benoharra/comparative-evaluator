@@ -2,18 +2,12 @@ import * as React from 'react';
 import {
     createElement,
     FunctionComponent,
-    useState,
-    ReactNode,
+    useState
 } from 'react';
 
-import usePromise from 'react-promise';
 import ReactTable from "react-table";
-import { Column, CellInfo } from "react-table";
-import {
-    BrowserRouter as Router,
-    Switch, Route, Link
-} from 'react-router-dom';
-import { testCompanies, testIndustries, CompanyProps } from './../sector/data-mocker';
+import { CellInfo } from "react-table";
+import { Link } from 'react-router-dom';
 import { IndustryProps } from './../dto/server-dtos';
 import { getAllIndustries } from '../services/industry-client';
 
@@ -22,16 +16,24 @@ interface Props {
 
 }
 
-export const IndustryList: FunctionComponent<Props> = (props: Props): any => {
-    const industryPromise = getAllIndustries();
-    const { value, loading } = usePromise<IndustryProps[]>(industryPromise);
+interface TableState {
+    data: IndustryProps[],
+    loading: boolean,
+}
 
-    if (loading) {
-        return <p>Loading...</p>
+export const IndustryList: FunctionComponent<Props> = (props: Props): any => {
+    const [tableState, setTableState] = useState({ data: [], loading: true } as TableState)
+
+    function fetchData(): void {
+        getAllIndustries()
+            .then((industries) => setTableState({ data: industries, loading: false }));
     }
+
     return (
         <ReactTable
-            data={value}
+            data={tableState.data}
+            loading={tableState.loading}
+            onFetchData={(state, instance) => fetchData()}
             columns={
                 [{
                     Header: "Industry",
@@ -57,11 +59,8 @@ export const IndustryList: FunctionComponent<Props> = (props: Props): any => {
                     Header: "Date Updated",
                     accessor: "dateUpdated"
                 }
-
                 ]
             }
         />
-
-
     )
 }

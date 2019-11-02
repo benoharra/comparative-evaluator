@@ -1,8 +1,6 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosError } from 'axios';
 
 import { IndustryProps } from './../dto/server-dtos';
-import { any } from 'prop-types';
-
 
 const axiosClient = axios.create({
     baseURL: 'http://localhost:8080/comp-eval/industry',
@@ -13,14 +11,12 @@ const axiosClient = axios.create({
 export const getAllIndustries = async function()  {
     return await axiosClient.get('/all') 
         .then(function (response): IndustryProps[] {
-            console.log("ya!");
             return response.data as IndustryProps[];
         })
         .catch(handleError) as IndustryProps[];
 }
 
 const handleError = function (error: AxiosError) {
-    console.log('Request Error!!!!!!!!!!!!!!');
     if (error.response) {
         // that falls out of the range of 2xx
         console.log(error.response.data);
