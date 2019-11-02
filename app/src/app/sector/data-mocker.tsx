@@ -41,24 +41,24 @@ export interface CompanyProps {
 export interface IndustryProps {
     name: string,
     companies: string[],
-    updated: string
+    dateUpdated: string
 }
 
 export const testIndustries: IndustryProps[] = [
     {
         name: "Industry1",
         companies: ["Comp1", "Comp2", "Comp3"],
-        updated: new Date().toDateString()
+        dateUpdated: new Date().toDateString()
     },
     {
         name: "Industry2",
-        companies: ["Comp1", "Comp2", "Comp3"],
-        updated: new Date().toDateString()
+        companies: ["Comp1", "Comp2", "Comp3", "Comp4"],
+        dateUpdated: new Date().toDateString()
     },
     {
         name: "Industry3",
         companies: ["Comp1", "Comp2", "Comp3"],
-        updated: new Date().toDateString()
+        dateUpdated: new Date().toDateString()
     },
 ]
     
