@@ -12,16 +12,12 @@ import { IndustryProps } from './../dto/server-dtos';
 import { getAllIndustries } from '../services/industry-client';
 
 
-interface Props {
-
-}
-
 interface TableState {
     data: IndustryProps[],
-    loading: boolean,
+    loading: boolean
 }
 
-export const IndustryList: FunctionComponent<Props> = (props: Props): any => {
+export const IndustryList: FunctionComponent = (): any => {
     const [tableState, setTableState] = useState({ data: [], loading: true } as TableState)
 
     function fetchData(): void {
@@ -30,37 +26,44 @@ export const IndustryList: FunctionComponent<Props> = (props: Props): any => {
     }
 
     return (
-        <ReactTable
-            data={tableState.data}
-            loading={tableState.loading}
-            onFetchData={(state, instance) => fetchData()}
-            columns={
-                [{
-                    Header: "Industry",
-                    accessor: "name",
-                    Cell: (cellInfo: CellInfo) => (
-                        <Link to="/industry">
-                            {cellInfo.value}
-                        </Link>
-                    )
-                },
-                {
-                    Header: "Companies",
-                    accessor: "companies",
-                    Cell: (cellInfo: CellInfo) => (
-                        <div>
-                            {cellInfo.value.slice(0, Math.min(3, cellInfo.value.length))
-                                .map((industry: IndustryProps) => industry.name).join()
-                                .concat(cellInfo.value.length > 3 ? "..." : "")}
-                        </div>
-                    )
-                },
-                {
-                    Header: "Date Updated",
-                    accessor: "dateUpdated"
+        <div style={{width: '45%'}}>
+            <h2 style={{ display: 'flex', justifyContent: 'center' }}>
+                Industries
+            </h2>
+            <ReactTable
+                data={tableState.data}
+                loading={tableState.loading}
+                onFetchData={(state, instance) => fetchData()}
+                columns={
+                    [{
+                        Header: "Industry",
+                        accessor: "name",
+                        Cell: (cellInfo: CellInfo) => (
+                            <Link to="/industry">
+                                {cellInfo.value}
+                            </Link>
+                        )
+                    },
+                    {
+                        Header: "Companies",
+                        accessor: "companies",
+                        Cell: (cellInfo: CellInfo) => (
+                            cellInfo.value.map((industry: IndustryProps) => industry.name).join()
+                        )
+                    },
+                    {
+                        Header: "Date Updated",
+                        accessor: "dateUpdated"
+                    }
+                    ]
                 }
-                ]
-            }
-        />
+                defaultSorted={[
+                    {
+                        id: "dateUpdated",
+                        desc: true
+                    }
+                ]}
+            />
+        </div>
     )
 }

@@ -39,6 +39,14 @@ export interface CompanyProps {
     efficiency: Efficiency;
 }
 
+export interface CompanyInfo {
+    companyName: {
+        name: string,
+        ticker: string
+    },
+    industries: string[]
+}
+
 export interface IndustryProps {
     name: string,
     companies: CompanyProps[],
