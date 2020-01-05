@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import { FunctionComponent, ReactNode, createElement } from 'react';
 
 import { Column, CellInfo } from "react-table";
@@ -7,13 +6,9 @@ import { Column, CellInfo } from "react-table";
 import { CompanyProps } from './data-mocker';
 
 import { Factor } from './input/cell/factor';
-
 import { Weight } from './input/cell/weight';
-
 import { CompanyNameHeader } from './input/cell/company-header';
-
 import { RowHeader } from './input/cell/row-header';
-
 import { AddCompanyButton } from './input/cell/add-company';
 
 

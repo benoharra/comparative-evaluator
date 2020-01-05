@@ -2,41 +2,27 @@ import { RowData } from './../sector-row-data';
 import { CompanyProps } from './../data-mocker';
 import { Constants } from './../../constants';
 
+import { buildFactorRow, calculateCategoryWeight } from './inputDataUtils';
+
 export const buildLiquidityMetrics = function(
-    companyList: CompanyProps[]
+    companyList: CompanyProps[],
+    weights: Map<string, number>
 ) : RowData[] {
     let allLiquidityRows: RowData[] = [{
         label: Constants.LIQUIDITY,
-        weight: 10
+        weight: calculateCategoryWeight(Constants.LIQUIDITY_FACTORS, weights)
     }];
-    allLiquidityRows.push(quickRatio(companyList));
-    allLiquidityRows.push(currentRatio(companyList));
-
+    allLiquidityRows.push(
+        buildFactorRow(
+            companyList, 
+            weights,
+            Constants.QUICK_RATIO,
+            (company) => company.liquidity.quickRatio));
+    allLiquidityRows.push(
+        buildFactorRow(
+            companyList, 
+            weights,
+            Constants.CURRENT_RATIO,
+            (company) => company.liquidity.currentRatio));
     return allLiquidityRows;
-}
-
-const quickRatio = function(
-    companyList: CompanyProps[]
-) : RowData {
-    let quickRatioRow: RowData = {
-        label: Constants.QUICK_RATIO,
-        weight: 5
-    };
-    companyList.forEach((company) => {
-        quickRatioRow[company.ticker] = company.liquidity.quickRatio;
-    });
-    return quickRatioRow;
-}
-
-const currentRatio = function(
-    companyList: CompanyProps[]
-) : RowData {
-    let currentRatioRow: RowData = {
-        label: Constants.CURRENT_RATIO,
-        weight: 5
-    };
-    companyList.forEach((company) => {
-        currentRatioRow[company.ticker] = company.liquidity.currentRatio;
-    });
-    return currentRatioRow;
 }

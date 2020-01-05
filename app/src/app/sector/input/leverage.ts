@@ -2,41 +2,26 @@ import { RowData } from './../sector-row-data';
 import { CompanyProps } from './../data-mocker';
 import { Constants } from './../../constants';
 
+import { buildFactorRow, calculateCategoryWeight } from './inputDataUtils';
+
 export const buildLeverageMetrics = function(
-    companyList: CompanyProps[]
+    companyList: CompanyProps[],
+    weights: Map<string, number>
 ) : RowData[] {
     let allLeverageRows: RowData[] = [{
         label: Constants.LEVERAGE,
-        weight: 11
+        weight: calculateCategoryWeight(Constants.LEVERAGE_FACTORS, weights)
     }];
-    allLeverageRows.push(debtToEquity(companyList));
-    allLeverageRows.push(interestCoverage(companyList));
+    allLeverageRows.push(
+        buildFactorRow(companyList, weights,
+            Constants.DEBT_TO_EQUITY,
+            (company) => company.leverage.debtToEquity));
+    allLeverageRows.push(
+        buildFactorRow(
+            companyList,
+            weights,
+            Constants.INTEREST_COVERAGE,
+            (company) => company.leverage.interestCoverage));
 
     return allLeverageRows;
-}
-
-const debtToEquity = function(
-    companyList: CompanyProps[]
-) : RowData {
-    let debtToEquityRow: RowData = {
-        label: Constants.DEBT_TO_EQUITY,
-        weight: 6
-    };
-    companyList.forEach((company) => {
-        debtToEquityRow[company.ticker] = company.leverage.debtToEquity;
-    });
-    return debtToEquityRow;
-}
-
-const interestCoverage = function(
-    companyList: CompanyProps[]
-) : RowData {
-    let interestCoverageRow: RowData = {
-        label: Constants.INTEREST_COVERAGE,
-        weight: 5
-    };
-    companyList.forEach((company) => {
-        interestCoverageRow[company.ticker] = company.leverage.interestCoverage;
-    });
-    return interestCoverageRow;
 }

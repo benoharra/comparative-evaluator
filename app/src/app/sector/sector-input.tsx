@@ -19,13 +19,14 @@ import "react-table/react-table.css";
 
 interface Props {
     companyList: CompanyProps[];
+    weights: Map<string, number>;
 }
 
 export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
     var companies = props.companyList;
     const [tableColumns, setTableColumns] = useState(getSectorColumns(props.companyList, addColumn, removeColumn));
 
-    const tableData = buildSectorRowData(companies);
+    const tableData = buildSectorRowData(companies, props.weights);
 
     function addColumn() {
         companies.push(blankCompany);

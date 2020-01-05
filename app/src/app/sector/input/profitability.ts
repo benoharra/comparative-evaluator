@@ -2,70 +2,40 @@ import { RowData } from './../sector-row-data';
 import { CompanyProps } from './../data-mocker';
 import { Constants } from './../../constants';
 
+import { buildFactorRow, calculateCategoryWeight } from './inputDataUtils';
 
 export const buildProfitMetrics = function(
-    companyList: CompanyProps[]
+    companyList: CompanyProps[],
+    weights: Map<string, number>
 ) : RowData[] {
     let allProfitRows: RowData[] = [{
         label: Constants.PROFITABILITY,
-        weight: 24
+        weight: calculateCategoryWeight(Constants.PROFITABILITY_FACTORS, weights)
     }];
-    allProfitRows.push(grossProfit(companyList));
-    allProfitRows.push(netProfit(companyList));
-    allProfitRows.push(returnOnEquity(companyList));
-    allProfitRows.push(returnOnInvestment(companyList));
+    allProfitRows.push(
+        buildFactorRow(
+            companyList, 
+            weights, 
+            Constants.GROSS_PROFIT, 
+            (company) => company.profitability.grossProfitMargin));
+    allProfitRows.push(
+        buildFactorRow(
+            companyList, 
+            weights,
+            Constants.NET_PROFIT,
+            (company) => company.profitability.netProfitMargin));
+    allProfitRows.push(
+        buildFactorRow(
+            companyList, 
+            weights, 
+            Constants.ROE, 
+            (company) => company.profitability.returnOnEquity));
+    allProfitRows.push(
+        buildFactorRow(
+            companyList, 
+            weights,
+            Constants.ROI,
+            (company) => company.profitability.returnOnInvestment));
 
     return allProfitRows;
-}
-
-const grossProfit = function(
-    companyList: CompanyProps[]
-) : RowData {
-    let grossProfitRow: RowData = {
-        label: Constants.GROSS_PROFIT,
-        weight: 12
-    };
-    companyList.forEach((company) => {
-        grossProfitRow[company.ticker] = company.profitability.grossProfitMargin;
-    });
-    return grossProfitRow;
-}
-
-const netProfit = function(
-    companyList: CompanyProps[]
-) : RowData {
-    let netProfitRow: RowData = {
-        label: Constants.NET_PROFIT,
-        weight: 4
-    };
-    companyList.forEach((company) => {
-        netProfitRow[company.ticker] = company.profitability.netProfitMargin;
-    });
-    return netProfitRow;
-}
-
-const returnOnEquity = function(
-    companyList: CompanyProps[]
-) : RowData {
-    let roeRow: RowData = {
-        label: Constants.ROE,
-        weight: 4
-    };
-    companyList.forEach((company) => {
-        roeRow[company.ticker] = company.profitability.returnOnEquity;
-    });
-    return roeRow;
-}
-
-const returnOnInvestment = function(
-    companyList: CompanyProps[]
-) : RowData {
-    let roiRow: RowData = {
-        label: Constants.ROI,
-        weight: 4
-    };
-    companyList.forEach((company) => {
-        roiRow[company.ticker] = company.profitability.returnOnInvestment;
-    });
-    return roiRow;
 }
