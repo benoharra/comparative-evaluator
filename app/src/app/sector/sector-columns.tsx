@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import { FunctionComponent, ReactNode, createElement } from 'react';
 
 import { Column, CellInfo } from "react-table";
@@ -7,24 +6,17 @@ import { Column, CellInfo } from "react-table";
 import { CompanyProps } from './data-mocker';
 
 import { Factor } from './input/cell/factor';
-
 import { Weight } from './input/cell/weight';
-
 import { CompanyNameHeader } from './input/cell/company-header';
-
 import { RowHeader } from './input/cell/row-header';
-
 import { AddCompanyButton } from './input/cell/add-company';
 
-
-const onWeightChange = function(newWeight: number) {
-    // TODO:Edit the factor category weight totals on input change
-}
 
 export const getSectorColumns = function(
     companyList: CompanyProps[],
     onUpdateColumns: () => void,
-    onRemoveColumn: (companyName: string) => void
+    onRemoveColumn: (companyName: string) => void,
+    onWeightChange: (factor: string, newWeight: number) => void
 ): any {
     // Add the data header names to the first column
     let columns: any[] = [{
@@ -56,7 +48,7 @@ export const getSectorColumns = function(
         accessor: "weight",
         Cell: (cellInfo: CellInfo) => <Weight 
                                         value={cellInfo.value}
-                                        rowLabel={cellInfo.original} 
+                                        row={cellInfo.original} 
                                         onChange={onWeightChange}/>
     });
     return columns;

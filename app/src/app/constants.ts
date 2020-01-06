@@ -16,6 +16,46 @@ export class Constants {
         ]);
     }
 
+    public static get PROFITABILITY_FACTORS(): string[] {
+        return [
+            Constants.GROSS_PROFIT,
+            Constants.NET_PROFIT,
+            Constants.ROE,
+            Constants.ROI
+        ];
+    }
+
+    public static get LIQUIDITY_FACTORS(): string[] {
+        return [
+            Constants.QUICK_RATIO,
+            Constants.CURRENT_RATIO
+        ];
+    }
+
+    public static get LEVERAGE_FACTORS(): string[] {
+        return [
+            Constants.DEBT_TO_EQUITY,
+            Constants.INTEREST_COVERAGE
+        ];
+    }
+
+    public static get EFFICIENCY_FACTORS(): string[] {
+        return [
+            Constants.RECEIVABLES_TURN,
+            Constants.ASSET_TURN,
+            Constants.INVENTORY_TURN
+        ];
+    }
+
+    public static get GROWTH_FACTORS(): string[] {
+        return [
+            Constants.FIVE_YR_REV,
+            Constants.ONE_YR_REV,
+            Constants.FIVE_YR_EPS,
+            Constants.ONE_YR_EPS
+        ];
+    }
+
     // Profitability
     public static get GROSS_PROFIT(): string { return "Gross Profit Margin"; }
     public static get NET_PROFIT(): string { return "Net Profit Margin"; }

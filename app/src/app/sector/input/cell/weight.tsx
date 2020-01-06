@@ -8,22 +8,25 @@ import { Constants } from './../../../constants';
 
 interface Props {
     value: any;
-    rowLabel: RowData;
-    onChange: (newWeight: number) => void;
+    row: RowData;
+    onChange: (factor: string, newWeight: number) => void;
 }
 
 export const Weight: FunctionComponent<Props> = (props: Props): any => {
     const [value, setValue] = useState(props.value);
 
     function onInputChange(event: React.ChangeEvent<HTMLInputElement>) {
-        props.onChange(1);
         setValue(event.currentTarget.value);
+        // If the number input is not null, update the weight totals
+        if(event.currentTarget.value) {
+            props.onChange(props.row.label, parseInt(event.currentTarget.value)); 
+        }
     }
 
-    if (Constants.FACTOR_CATEGORIES.has(props.rowLabel.label)) {
+    if (Constants.FACTOR_CATEGORIES.has(props.row.label)) {
         return (
             <div style={{textAlign:'center', fontWeight:'bold'}}>
-                    {`${value}%`}
+                    {`${props.value}%`}
             </div>    
         )
     } else {

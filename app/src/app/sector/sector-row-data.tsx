@@ -16,15 +16,15 @@ export interface RowData {
 }
 
 export const buildSectorRowData = function(
-    companyList: CompanyProps[]
+    companyList: CompanyProps[],
+    weights: Map<string, number>
 ): RowData[] {
-    let rowData: RowData[] = buildProfitMetrics(companyList);
+    let rowData: RowData[] = buildProfitMetrics(companyList, weights);
     rowData = rowData.concat(
-        buildLiquidityMetrics(companyList),
-        buildLeverageMetrics(companyList),
-        buildEfficiencyMetrics(companyList),
-        buildGrowthMetrics(companyList)
-        );
+        buildLiquidityMetrics(companyList, weights),
+        buildLeverageMetrics(companyList, weights),
+        buildEfficiencyMetrics(companyList, weights),
+        buildGrowthMetrics(companyList, weights));
 
     return rowData;
 }
