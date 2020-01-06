@@ -1,3 +1,4 @@
+
 import * as React from 'react';
 
 import {
@@ -11,12 +12,15 @@ import { testCompanies, CompanyProps } from './data-mocker';
 
 export const Industry: FunctionComponent = function() {
   const companies: CompanyProps[] = testCompanies;
+  const weights: Map<string, number> = new Map();
 
   return (
     <Fragment>
       <h1>Add/Edit a sector</h1>
       <h2>Test Sector - hard coded data</h2>
-      <SectorInput companyList={companies} />
+      <SectorInput 
+        companyList={companies} 
+        weights={weights} />
     </Fragment>
   );
 };

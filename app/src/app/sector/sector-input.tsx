@@ -24,18 +24,40 @@ interface Props {
 
 export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
     var companies = props.companyList;
-    const [tableColumns, setTableColumns] = useState(getSectorColumns(props.companyList, addColumn, removeColumn));
+    var weights = props.weights;
+    const [tableColumns, setTableColumns] = useState(
+        getSectorColumns(
+            props.companyList,
+             addColumn, 
+             removeColumn,
+             onWeightChange));
 
-    const tableData = buildSectorRowData(companies, props.weights);
+    const [tableData, setTableData] = useState(
+        buildSectorRowData(companies, weights));
 
     function addColumn() {
         companies.push(blankCompany);
-        setTableColumns(getSectorColumns(companies, addColumn, removeColumn));
+        setTableColumns(
+            getSectorColumns(
+                companies, 
+                addColumn, 
+                removeColumn,
+                onWeightChange));
     }
 
     function removeColumn(companyName: string) {
         companies = companies.filter((company: CompanyProps) => company.name !== companyName);
-        setTableColumns(getSectorColumns(companies, addColumn, removeColumn));
+        setTableColumns(
+            getSectorColumns(
+                companies, 
+                addColumn, 
+                removeColumn,
+                onWeightChange));
+    }
+
+    function onWeightChange(factor: string, value: number) {
+        weights.set(factor, value);
+        setTableData(buildSectorRowData(companies, weights));
     }
 
     return (
