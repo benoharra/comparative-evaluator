@@ -1,3 +1,5 @@
+import { Constants } from '../constants';
+
 interface Profitability {
     grossProfitMargin: number;
     netProfitMargin: number;
@@ -93,6 +95,25 @@ export const blankCompany: CompanyProps =
             inventoryTurnover: 0
         }
     };
+
+export const defaultWeights: Map<string, number> = 
+    new Map([
+        [Constants.GROSS_PROFIT, 12],
+        [Constants.NET_PROFIT, 12],
+        [Constants.ROE, 6],
+        [Constants.ROI, 6],
+        [Constants.QUICK_RATIO, 6],
+        [Constants.CURRENT_RATIO, 6],
+        [Constants.DEBT_TO_EQUITY, 6],
+        [Constants.INTEREST_COVERAGE, 6],
+        [Constants.RECEIVABLES_TURN, 6],
+        [Constants.ASSET_TURN, 6],
+        [Constants.INVENTORY_TURN, 6],
+        [Constants.FIVE_YR_REV, 10],
+        [Constants.FIVE_YR_EPS, 5],
+        [Constants.ONE_YR_REV, 10],
+        [Constants.ONE_YR_EPS, 5]
+    ]);
 
 export const testCompanies: CompanyProps[] = [
     {

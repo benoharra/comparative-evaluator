@@ -3,24 +3,64 @@ import * as React from 'react';
 
 import {
   useState,
+  useEffect,
   createElement, 
   FunctionComponent,
   Fragment} from 'react';
 
 import { SectorInput } from './sector-input';
-import { testCompanies, CompanyProps } from './data-mocker';
+import { testCompanies, defaultWeights, CompanyProps } from './data-mocker';
+import { useParams } from 'react-router';
+
+import { getIndustryView } from './../services/industry-client';
+
+
+interface State {
+  industryName: string,
+  companies: CompanyProps[],
+  weights: Map<string, number>
+}
 
 export const Industry: FunctionComponent = function() {
-  const companies: CompanyProps[] = testCompanies;
-  const weights: Map<string, number> = new Map();
+  let { name } = useParams();
+  const [state, setState] = useState<State>({
+    industryName: "",
+    companies: [],
+    weights: new Map()
+  });
 
+  function getIndustry(name: string) {
+    getIndustryView(name)
+    .then(industryView => setState({
+      industryName: industryView.industry.name,
+      companies: industryView.industry.companies,
+      weights: industryView.industry.weights
+    }))
+    .catch(e => {
+      console.log(e);
+    })
+  }
+
+  useEffect(() => {
+    if(name && name !== "new") {
+      getIndustry(name);
+    } else {
+        setState({
+          industryName: "New Analysis",
+          companies: testCompanies,
+          weights: defaultWeights
+        });
+    }
+  })
+
+  
   return (
     <Fragment>
       <h1>Add/Edit a sector</h1>
-      <h2>Test Sector - hard coded data</h2>
+      <h2>{`Viewing ${name}`}</h2>
       <SectorInput 
-        companyList={companies} 
-        weights={weights} />
+        companyList={state.companies} 
+        weights={state.weights} />
     </Fragment>
   );
 };

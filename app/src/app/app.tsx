@@ -23,7 +23,7 @@ export const App: FunctionComponent = function() {
     <Router>
       <Switch>
         <Route exact path="/" component={HomePage}/>  
-        <Route path="/industry" component={Industry}/>
+        <Route path="/industry/:name" component={Industry}/>
       </Switch>
     </Router>
   );

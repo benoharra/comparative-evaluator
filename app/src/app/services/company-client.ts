@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { CompanyInfo } from './../dto/server-dtos';
+import { CompanyInfo } from '../dto/company-dtos';
 import { handleErrorArray } from './client-utils';
 
 const axiosClient = axios.create({
@@ -9,10 +9,10 @@ const axiosClient = axios.create({
     headers: {'Content-Type':'application/json'}
 });
 
-export const getAllCompanies = async function() {
-    return await axiosClient.get('/all')
+export async function getAllCompanies() {
+    return await axiosClient.get<CompanyInfo[]>('/all')
         .then(function(response): CompanyInfo[] {
-            return response.data as CompanyInfo[];
+            return response.data;
         })
-        .catch(handleErrorArray) as CompanyInfo[];
+        .catch(handleErrorArray);
 }
