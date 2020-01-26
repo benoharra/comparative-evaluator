@@ -19,6 +19,7 @@ interface State {
   industryName: string,
   companies: CompanyProps[],
   weights: Map<string, number>
+  loading: boolean
 }
 
 export const Industry: FunctionComponent = function() {
@@ -26,7 +27,8 @@ export const Industry: FunctionComponent = function() {
   const [state, setState] = useState<State>({
     industryName: "",
     companies: [],
-    weights: new Map()
+    weights: new Map(),
+    loading: true
   });
 
   function getIndustry(name: string) {
@@ -34,7 +36,8 @@ export const Industry: FunctionComponent = function() {
     .then(industryView => setState({
       industryName: industryView.industry.name,
       companies: industryView.industry.companies,
-      weights: industryView.industry.weights
+      weights: industryView.industry.weights,
+      loading: false
     }))
     .catch(e => {
       console.log(e);
@@ -42,25 +45,38 @@ export const Industry: FunctionComponent = function() {
   }
 
   useEffect(() => {
+    if(!state.loading) {
+      return;
+    }
     if(name && name !== "new") {
       getIndustry(name);
     } else {
         setState({
           industryName: "New Analysis",
           companies: testCompanies,
-          weights: defaultWeights
+          weights: defaultWeights,
+          loading: false
         });
     }
   })
 
   
-  return (
-    <Fragment>
-      <h1>Add/Edit a sector</h1>
-      <h2>{`Viewing ${name}`}</h2>
-      <SectorInput 
-        companyList={state.companies} 
-        weights={state.weights} />
-    </Fragment>
-  );
+  if(state.loading) {
+    return (
+      <Fragment>
+        <h2>Loading...</h2>
+      </Fragment>
+    )
+  } else {
+    return (
+      <Fragment>
+        <h1>Add/Edit a sector</h1>
+        <h2>{`Viewing ${name}`}</h2>
+        <SectorInput 
+          companyList={state.companies} 
+          weights={state.weights} />
+      </Fragment>
+    );
+  }
+
 };

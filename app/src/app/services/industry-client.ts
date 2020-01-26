@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { IndustryProps, IndustryView, RankingsView } from '../dto/industry-dtos';
+import { IndustryProps, IndustryView, RankingsView, IndustryServerDto, IndustryViewServerDto } from '../dto/industry-dtos';
 import { CompanyName } from '../dto/company-dtos';
 import { handleErrorArray } from './client-utils';
 
@@ -19,13 +19,29 @@ export async function getAllIndustries()  {
 }
 
 export async function getIndustryView(industryName: string): Promise<IndustryView> {
-    return axios.get<IndustryView>('/view', {
+    return await axios.get<IndustryViewServerDto>('/view', {
         params: {
             name: industryName
         },
         ...axiosConfig
     })
-    .then(response => response.data);
+    .then(response => {
+        const serverDto = response.data;
+        const serverIndustry = serverDto.industry;
+        const mapWeights = new Map<string, number>();
+        Object.keys(serverIndustry.weights).forEach(key => {
+            mapWeights.set(key, serverIndustry.weights[key]);
+        });
+        return <IndustryView>{
+            industry: {
+                name: serverIndustry.name,
+                companies: serverIndustry.companies,
+                dateUpdated: serverIndustry.dateUpdated,
+                weights: mapWeights
+            },
+            rankings: serverDto.rankings
+        };
+    });
 }
 
 export async function saveIndustry(
