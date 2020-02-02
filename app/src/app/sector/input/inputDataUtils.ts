@@ -1,5 +1,6 @@
 import { RowData } from './../sector-row-data';
 import { CompanyProps } from './../data-mocker';
+import { FactorConfig } from '../../config';
 
 export const calculateCategoryWeight = function(
     categoryFactors: string[],
@@ -12,11 +13,11 @@ export const calculateCategoryWeight = function(
 export const buildFactorRow = function(
     companyList: CompanyProps[],
     weights: Map<string, number>,
-    factor: string,
+    factor: FactorConfig,
     selectValue: (company: CompanyProps) => number): RowData {
     let nextRow: RowData = {
-        label: factor,
-        weight: weights.get(factor) || 0
+        label: factor.display,
+        weight: weights.get(factor.key) || 0
     }
     companyList.forEach((company) => {
         nextRow[company.ticker] = selectValue(company);

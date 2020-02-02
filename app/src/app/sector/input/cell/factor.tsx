@@ -5,6 +5,7 @@ import { createElement, FunctionComponent, useState } from 'react';
 import { RowData } from './../../sector-row-data';
 
 import { Constants } from './../../../constants';
+import { FactorConfig } from '../../../config';
 
 interface Props {
     value: any;

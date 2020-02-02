@@ -3,6 +3,7 @@ import { CompanyProps } from './../data-mocker';
 import { Constants } from './../../constants';
 
 import { buildFactorRow, calculateCategoryWeight } from './inputDataUtils';
+import { getConfig, getProfitabilityKeys } from '../../config';
 
 export const buildProfitMetrics = function(
     companyList: CompanyProps[],
@@ -10,31 +11,32 @@ export const buildProfitMetrics = function(
 ) : RowData[] {
     let allProfitRows: RowData[] = [{
         label: Constants.PROFITABILITY,
-        weight: calculateCategoryWeight(Constants.PROFITABILITY_FACTORS, weights)
+        weight: calculateCategoryWeight(getProfitabilityKeys(), weights)
     }];
+    const config = getConfig();
     allProfitRows.push(
         buildFactorRow(
             companyList, 
             weights, 
-            Constants.GROSS_PROFIT, 
+            config.profitability.grossProfitMargin, 
             (company) => company.profitability.grossProfitMargin));
     allProfitRows.push(
         buildFactorRow(
             companyList, 
             weights,
-            Constants.NET_PROFIT,
+            config.profitability.netProfitMargin,
             (company) => company.profitability.netProfitMargin));
     allProfitRows.push(
         buildFactorRow(
             companyList, 
             weights, 
-            Constants.ROE, 
+            config.profitability.returnOnEquity, 
             (company) => company.profitability.returnOnEquity));
     allProfitRows.push(
         buildFactorRow(
             companyList, 
             weights,
-            Constants.ROI,
+            config.profitability.returnOnInvestment,
             (company) => company.profitability.returnOnInvestment));
 
     return allProfitRows;

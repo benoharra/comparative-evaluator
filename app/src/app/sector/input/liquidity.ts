@@ -3,6 +3,7 @@ import { CompanyProps } from './../data-mocker';
 import { Constants } from './../../constants';
 
 import { buildFactorRow, calculateCategoryWeight } from './inputDataUtils';
+import { getLiquidityKeys, getConfig } from '../../config';
 
 export const buildLiquidityMetrics = function(
     companyList: CompanyProps[],
@@ -10,19 +11,20 @@ export const buildLiquidityMetrics = function(
 ) : RowData[] {
     let allLiquidityRows: RowData[] = [{
         label: Constants.LIQUIDITY,
-        weight: calculateCategoryWeight(Constants.LIQUIDITY_FACTORS, weights)
+        weight: calculateCategoryWeight(getLiquidityKeys(), weights)
     }];
+    const config = getConfig();
     allLiquidityRows.push(
         buildFactorRow(
             companyList, 
             weights,
-            Constants.QUICK_RATIO,
+            config.liquidity.quickRatio,
             (company) => company.liquidity.quickRatio));
     allLiquidityRows.push(
         buildFactorRow(
             companyList, 
             weights,
-            Constants.CURRENT_RATIO,
+            config.liquidity.currentRatio,
             (company) => company.liquidity.currentRatio));
     return allLiquidityRows;
 }

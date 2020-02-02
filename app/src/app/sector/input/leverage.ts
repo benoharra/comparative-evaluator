@@ -3,6 +3,7 @@ import { CompanyProps } from './../data-mocker';
 import { Constants } from './../../constants';
 
 import { buildFactorRow, calculateCategoryWeight } from './inputDataUtils';
+import { getLeverageKeys, getConfig } from '../../config';
 
 export const buildLeverageMetrics = function(
     companyList: CompanyProps[],
@@ -10,17 +11,18 @@ export const buildLeverageMetrics = function(
 ) : RowData[] {
     let allLeverageRows: RowData[] = [{
         label: Constants.LEVERAGE,
-        weight: calculateCategoryWeight(Constants.LEVERAGE_FACTORS, weights)
+        weight: calculateCategoryWeight(getLeverageKeys(), weights)
     }];
+    const config = getConfig();
     allLeverageRows.push(
         buildFactorRow(companyList, weights,
-            Constants.DEBT_TO_EQUITY,
+            config.leverage.debtToEquity,
             (company) => company.leverage.debtToEquity));
     allLeverageRows.push(
         buildFactorRow(
             companyList,
             weights,
-            Constants.INTEREST_COVERAGE,
+            config.leverage.interestCoverage,
             (company) => company.leverage.interestCoverage));
 
     return allLeverageRows;

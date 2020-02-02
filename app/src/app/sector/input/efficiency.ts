@@ -3,6 +3,7 @@ import { CompanyProps } from './../data-mocker';
 import { Constants } from './../../constants';
 
 import { buildFactorRow, calculateCategoryWeight } from './inputDataUtils';
+import { getConfig, getEfficiencyKeys } from '../../config';
 
 export const buildEfficiencyMetrics = function(
     companyList: CompanyProps[],
@@ -10,25 +11,26 @@ export const buildEfficiencyMetrics = function(
 ) : RowData[] {
     let allEfficiencyRows: RowData[] = [{
         label: Constants.EFFICIENCY,
-        weight: calculateCategoryWeight(Constants.EFFICIENCY_FACTORS, weights)
+        weight: calculateCategoryWeight(getEfficiencyKeys(), weights)
     }];
+    const config = getConfig();
     allEfficiencyRows.push(
         buildFactorRow(
             companyList,
             weights,
-            Constants.RECEIVABLES_TURN,
+            config.efficiency.receivablesTurnover,
             (company) => company.efficiency.receivableTurnover));
     allEfficiencyRows.push(
         buildFactorRow(
             companyList,
             weights,
-            Constants.ASSET_TURN,
+            config.efficiency.assetTurnover,
             (company) => company.efficiency.assetTurnover));
     allEfficiencyRows.push(
         buildFactorRow(
             companyList,
             weights,
-            Constants.INVENTORY_TURN,
+            config.efficiency.inventoryTurnover,
             (company) => company.efficiency.inventoryTurnover));
 
     return allEfficiencyRows;
