@@ -8,6 +8,7 @@ import { CompanyProps } from './data-mocker'
 import { getSectorColumns } from './sector-columns';
 import { buildSectorRowData } from './sector-row-data';
 import { blankCompany } from './data-mocker';
+import { TotalWeight } from './input/total-weight';
 
 import ReactTable from "react-table";
 
@@ -52,18 +53,47 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
     }
 
     function onWeightChange(factor: string, value: number) {
+        // TODO: Weight sums not adding up anymore
         weights.set(factor, value);
         setTableData(buildSectorRowData(companies, weights));
     }
 
+    function getTotalWeight(): number {
+        return [...weights]
+        .map(item => item[1])
+        .reduce((sum: number, value: number) => sum + value);
+    }
+
+    function saveIndustry() {
+
+    }
+
+    function rankIndustry() {
+
+    }
+
     return (
-        <div>
+        <div style={{padding: '10px'}}>
             <ReactTable
                 data={tableData}
                 columns={tableColumns}
                 defaultPageSize = {20}
                 sortable={false}
+                showPagination={false}
             />
+            <div style={{flexDirection: 'column', float: 'right'}}>
+                <TotalWeight total={getTotalWeight()}/>
+                <div style={{flexDirection: 'row', 
+                    padding: '10px 20px 10px 10px'}}>
+                    <button onClick={e => saveIndustry()} style={{padding:'10px', margin: '10px'}}>
+                        Save Industry
+                    </button>
+                    <button onClick={e => rankIndustry()} style={{padding: '10px'}}>
+                        Submit For Ranking
+                    </button>
+                </div>
+            </div>
+
         </div>
     );
 };

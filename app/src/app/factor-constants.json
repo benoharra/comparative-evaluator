@@ -1,0 +1,87 @@
+{
+    "profitability": {
+        "grossProfitMargin": {
+            "type": "percent",
+            "display": "Gross Profit Margin",
+            "key": "grossProfitMargin"
+        },
+        "netProfitMargin": {
+            "type": "percent",
+            "display": "Net Profit Margin",
+            "key": "netProfitMargin"
+        } ,
+        "returnOnEquity": {
+            "type": "percent",
+            "display": "Return on Equity",
+            "key": "roe"
+        },
+        "returnOnInvestment": {
+            "type": "percent",
+            "display": "Return on Investment",
+            "key": "roi"
+        }
+    },
+    "liquidity": {
+        "quickRatio": {
+            "type": "number",
+            "display": "Quick Ratio",
+            "key": "quickRatio"
+        },
+        "currentRatio": {
+            "type": "number",
+            "display": "Current Ratio",
+            "key": "currentRatio"
+        }
+    },
+    "leverage": {
+        "debtToEquity": {
+            "type": "number",
+            "display": "Debt to Equity",
+            "key": "debtToEquity"
+        },
+        "interestCoverage": {
+            "type": "number",
+            "display": "Interest Coverage",
+            "key": "interestCoverage"
+        }
+    },
+    "efficiency": {
+        "receivablesTurnover": {
+            "type": "number",
+            "display": "Receivables Turnover Ratio",
+            "key": "receivablesTurn"
+        },
+        "assetTurnover": {
+            "type": "number",
+            "display": "Asset Turnover Ratio",
+            "key": "assetsTurn"
+        },
+        "inventoryTurnover": {
+            "type": "number",
+            "display": "Inventory Turnover Ratio",
+            "key": "inventoryTurn"
+        }
+    },
+    "growth": {
+        "fiveYearRevenue": {
+            "type": "percent",
+            "display": "5 yr. Revenue Growth",
+            "key": "fiveYearRev"
+        },
+        "oneYearRevenue": {
+            "type": "percent",
+            "display": "1 yr. Revenue Growth",
+            "key": "oneYearRev"
+        },
+        "fiveYearEps": {
+            "type": "percent",
+            "display": "5 yr. EPS Growth",
+            "key": "fiveYearEps"
+        },
+        "oneYearEps": {
+            "type": "percent",
+            "display": "1 yr. EPS Growth",
+            "key": "oneYearEps"
+        }
+    }
+}

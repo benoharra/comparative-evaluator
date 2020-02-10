@@ -6,6 +6,8 @@ import { RowData } from './../../sector-row-data';
 
 import { Constants } from './../../../constants';
 
+import { getFactorKeyFromName } from './../../../config';
+
 interface Props {
     value: any;
     row: RowData;
@@ -19,7 +21,9 @@ export const Weight: FunctionComponent<Props> = (props: Props): any => {
         setValue(event.currentTarget.value);
         // If the number input is not null, update the weight totals
         if(event.currentTarget.value) {
-            props.onChange(props.row.label, parseInt(event.currentTarget.value)); 
+            props.onChange(
+                getFactorKeyFromName(props.row.label),
+                parseInt(event.currentTarget.value)); 
         }
     }
 

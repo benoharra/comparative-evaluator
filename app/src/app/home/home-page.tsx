@@ -11,7 +11,7 @@ import {
     Switch, Route, Link
 } from 'react-router-dom';
 
-import { Industry } from './../sector/industry';
+import { IndustryPage } from '../sector/industry-page';
 import { IndustryList } from './industry-list';
 import { CompanyList } from './company-list';
 import { testCompanies, CompanyProps } from './../sector/data-mocker';

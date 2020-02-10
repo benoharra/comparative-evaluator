@@ -9,10 +9,11 @@ import {
   Fragment} from 'react';
 
 import { SectorInput } from './sector-input';
+import { IndustryName } from './input/industry-name';
 import { testCompanies, defaultWeights, CompanyProps } from './data-mocker';
 import { useParams } from 'react-router';
 
-import { getIndustryView } from './../services/industry-client';
+import { getIndustryView } from '../services/industry-client';
 
 
 interface State {
@@ -20,15 +21,17 @@ interface State {
   companies: CompanyProps[],
   weights: Map<string, number>
   loading: boolean
+  isNew: boolean
 }
 
-export const Industry: FunctionComponent = function() {
+export const IndustryPage: FunctionComponent = function() {
   let { name } = useParams();
   const [state, setState] = useState<State>({
     industryName: "",
     companies: [],
     weights: new Map(),
-    loading: true
+    loading: true,
+    isNew: true
   });
 
   function getIndustry(name: string) {
@@ -37,7 +40,8 @@ export const Industry: FunctionComponent = function() {
       industryName: industryView.industry.name,
       companies: industryView.industry.companies,
       weights: industryView.industry.weights,
-      loading: false
+      loading: false,
+      isNew: false
     }))
     .catch(e => {
       console.log(e);
@@ -55,11 +59,11 @@ export const Industry: FunctionComponent = function() {
           industryName: "New Analysis",
           companies: testCompanies,
           weights: defaultWeights,
-          loading: false
+          loading: false,
+          isNew: true
         });
     }
   })
-
   
   if(state.loading) {
     return (
@@ -71,7 +75,7 @@ export const Industry: FunctionComponent = function() {
     return (
       <Fragment>
         <h1>Add/Edit a sector</h1>
-        <h2>{`Viewing ${name}`}</h2>
+        <IndustryName name={state.industryName} isNew={state.isNew}/>
         <SectorInput 
           companyList={state.companies} 
           weights={state.weights} />

@@ -13,7 +13,7 @@ import {
 } from 'react-router-dom';
 
 import { HomePage } from './home/home-page';
-import { Industry } from './sector/industry';
+import { IndustryPage } from './sector/industry-page';
 
 
 
@@ -23,7 +23,7 @@ export const App: FunctionComponent = function() {
     <Router>
       <Switch>
         <Route exact path="/" component={HomePage}/>  
-        <Route path="/industry/:name" component={Industry}/>
+        <Route path="/industry/:name" component={IndustryPage}/>
       </Switch>
     </Router>
   );
