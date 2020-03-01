@@ -43,14 +43,14 @@ export async function getIndustryView(industryName: string): Promise<IndustryVie
 export async function saveIndustryData(
     name: string,
     companies: CompanyName[],
-    companyFactors: any,
+    companyFactors: Map<string, number>,
     weights: Map<string, number>) 
 {
     return await axios.post('/save', 
     {
         name: name,
         companies: companies,
-        companyFactors: companyFactors,
+        companyFactors: mapToObject(companyFactors),
         weights: mapToObject(weights)
     },
     axiosConfig)

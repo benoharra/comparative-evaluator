@@ -16,6 +16,8 @@ import "react-table/react-table.css";
 import { saveIndustryData } from '../services/industry-client';
 import { CompanyList } from '../home/company-list';
 import { UpdatedDataPoint } from './input/cell/factor';
+import { Constants } from './../constants';
+import { getFactorKeyFromName } from '../config';
 import { string } from 'prop-types';
 
 interface Props {
@@ -34,7 +36,8 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
                  addColumn, 
                  removeColumn,
                  onWeightChange,
-                 onUpdateData)
+                 onUpdateData,
+                 onUpdateCompanyName)
         });
 
     const [tableData, setTableData] = useState(
@@ -56,7 +59,8 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
                 addColumn, 
                 removeColumn,
                 onWeightChange,
-                onUpdateData)
+                onUpdateData,
+                onUpdateCompanyName)
         });
     }
 
@@ -69,7 +73,8 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
                 addColumn, 
                 removeColumn,
                 onWeightChange,
-                onUpdateData)
+                onUpdateData,
+                onUpdateCompanyName)
         });
     }
 
@@ -107,16 +112,76 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
             dataUpdates: newDataUpdates});
     }
 
+    function onUpdateCompanyName(oldName:string, oldTicker: string, newName: string, newTicker: string) {
+        // Find the company in the list and adjust it
+        const newCompanyIndex = tableColumns.companies
+            .findIndex(company => company.name === oldName && company.ticker === oldTicker);
+        const newCompany = tableColumns.companies[newCompanyIndex];
+        newCompany.name = newName;
+        newCompany.ticker = newTicker;
+        const newCompanyList = tableColumns.companies;
+        newCompanyList[newCompanyIndex] = newCompany;
+        
+        // Set the proper tables columns with the new data
+        setTableColumns({
+            companies: newCompanyList,
+            columns: getSectorColumns(
+                    newCompanyList, 
+                    addColumn, 
+                    removeColumn,
+                    onWeightChange,
+                    onUpdateData,
+                    onUpdateCompanyName)});
+
+        // Convert any old data keys to the new values
+        if(oldTicker !== newTicker) {
+            const newDataUpdates: Map<string, Map<string, any>> = new Map();
+            tableData.dataUpdates.forEach((row, rowLabel, map) => {
+                const newRow = new Map();
+                row.forEach((value, valueTicker, map) => {
+                    newRow.set(valueTicker === oldTicker ? newTicker : valueTicker,  value as number);
+                });
+                newDataUpdates.set(rowLabel, newRow);
+            });
+            setTableData({
+                companyData: buildSectorRowData(
+                    newCompanyList,
+                    tableData.weights,
+                    newDataUpdates
+                ),
+                weights: tableData.weights,
+                dataUpdates: newDataUpdates});
+        }
+    }
+
     function saveIndustry() {
         saveIndustryData(
             props.industryName,
             tableColumns.companies.map(company => ({name: company.name, ticker: company.ticker})),
-            tableData.companyData,
+            buildFactorMapToSubmit(),
             tableData.weights);
     }
 
     function rankIndustry() {
 
+    }
+
+    function buildFactorMapToSubmit(): Map<string, number> {
+        const data = new Map<string, number>();
+        tableData.companyData
+            .filter(row => !Constants.FACTOR_CATEGORIES.has(row.label))
+            .forEach(row => {
+                const rowKey = getFactorKeyFromName(row.label);
+                for(let[ticker, value] of Object.entries(row)) {
+                    if(ticker !== "weight" && ticker !== "label") {
+                        data.set(
+                            `${ticker}.${rowKey}`, 
+                            value ? value as number : 0);
+                    }
+                }
+            });
+        
+        return data;
     }
 
     return (

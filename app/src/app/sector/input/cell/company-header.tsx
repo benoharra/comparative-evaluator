@@ -7,7 +7,8 @@ interface Props {
     companyHeader: {
         name: string;
         ticker: string;
-    }
+    };
+    onUpdateName: (oldName: string, oldTicker: string, newName: string, newTicker: string) => void;
     onRemoveCompany: (companyName: string) => void;
 }
 
@@ -16,13 +17,22 @@ export const CompanyNameHeader: FunctionComponent<Props> = (props: Props): any =
 
     function setNewHeader(input: string) {
         setCompanyHeader({
-            name: input.substring(0, input.indexOf("(")).trim(),
-            ticker: input.substring(input.indexOf("(") + 1, input.length - 1).trim()
+           name: input.substring(0, input.indexOf("(")).trim(),
+           ticker: input.substring(input.indexOf("(") + 1, input.length - 1).trim()
         });
     }
 
     function onInputChange(event: React.ChangeEvent<HTMLInputElement>) {
         setNewHeader(event.currentTarget.value);
+    }
+
+    function onBlur(event: React.ChangeEvent<HTMLInputElement>) {
+        props.onUpdateName(
+            props.companyHeader.name,
+            props.companyHeader.ticker,
+            companyHeader.name,
+            companyHeader.ticker
+        )
     }
 
     function onRemoveButtonClicked(event: React.MouseEvent<HTMLButtonElement>) {
@@ -36,6 +46,7 @@ export const CompanyNameHeader: FunctionComponent<Props> = (props: Props): any =
                 type="text"
                 value={`${companyHeader.name} (${companyHeader.ticker})`}
                 onChange={onInputChange}
+                onBlur={onBlur}
             />
             <button 
                 onClick={onRemoveButtonClicked}

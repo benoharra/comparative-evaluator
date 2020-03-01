@@ -17,7 +17,8 @@ export const getSectorColumns = function(
     onUpdateColumns: () => void,
     onRemoveColumn: (companyName: string) => void,
     onWeightChange: (factor: string, newWeight: number) => void,
-    onUpdateData: (updatedDataPoint: UpdatedDataPoint) => void
+    onUpdateData: (updatedDataPoint: UpdatedDataPoint) => void,
+    onUpdateCompanyName: (oldName: string, oldTicker: string, newName: string, newTicker: string) => void
 ): any {
     // Add the data header names to the first column
     let columns: any[] = [{
@@ -32,7 +33,8 @@ export const getSectorColumns = function(
         columns.push({
             Header: () => <CompanyNameHeader 
                             companyHeader={company}
-                            onRemoveCompany={onRemoveColumn} 
+                            onRemoveCompany={onRemoveColumn}
+                            onUpdateName={onUpdateCompanyName} 
                           />,
             accessor: company.ticker,
             minWidth: 140,
