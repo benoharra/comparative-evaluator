@@ -1,6 +1,7 @@
 import { RowData } from './../sector-row-data';
 import { CompanyProps } from './../data-mocker';
 import { FactorConfig } from '../../config';
+import { string } from 'prop-types';
 
 export const calculateCategoryWeight = function(
     categoryFactors: string[],
@@ -8,7 +9,6 @@ export const calculateCategoryWeight = function(
     const total = categoryFactors
         .map(factor => weightMap.has(factor) ? weightMap.get(factor)! : 0)
         .reduce((sum, next) => sum + next);
-    console.log(total);
     return total;
 }
 
@@ -16,13 +16,18 @@ export const buildFactorRow = function(
     companyList: CompanyProps[],
     weights: Map<string, number>,
     factor: FactorConfig,
+    updatedDataPoints: Map<string, Map<string, any>>,
     selectValue: (company: CompanyProps) => number): RowData {
     let nextRow: RowData = {
         label: factor.display,
         weight: weights.get(factor.key) || 0
     }
     companyList.forEach((company) => {
-        nextRow[company.ticker] = selectValue(company);
+        const updatedValue = updatedDataPoints.has(factor.display) ? 
+            updatedDataPoints.get(factor.display)!.get(company.ticker) : undefined;
+        nextRow[company.ticker] = updatedValue ?
+            updatedValue 
+            : selectValue(company);
     })
     return nextRow;
 }

@@ -78,7 +78,8 @@ export const IndustryPage: FunctionComponent = function() {
         <IndustryName name={state.industryName} isNew={state.isNew}/>
         <SectorInput 
           companyList={state.companies} 
-          weights={state.weights} />
+          weights={state.weights} 
+          industryName={state.industryName}/>
       </Fragment>
     );
   }

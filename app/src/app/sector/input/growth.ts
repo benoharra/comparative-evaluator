@@ -7,7 +7,8 @@ import { getConfig, getGrowthKeys } from '../../config';
 
 export const buildGrowthMetrics = function(
     companyList: CompanyProps[],
-    weights: Map<string, number>
+    weights: Map<string, number>,
+    updatedData: Map<string, Map<string, any>>
 ) : RowData[] {
     let allGrowthRows: RowData[] = [{
         label: Constants.GROWTH,
@@ -19,24 +20,28 @@ export const buildGrowthMetrics = function(
             companyList,
             weights,
             config.growth.fiveYearRevenue,
+            updatedData,
             (company) => company.growth.fiveYearRev));
     allGrowthRows.push(
         buildFactorRow(
             companyList,
             weights,
             config.growth.fiveYearEps,
+            updatedData,
             (company) => company.growth.fiveYearEps));
     allGrowthRows.push(
         buildFactorRow(
             companyList,
             weights,
             config.growth.oneYearRevenue,
+            updatedData,
             (company) => company.growth.oneYearRev));
     allGrowthRows.push(
         buildFactorRow(
             companyList,
             weights,
             config.growth.oneYearEps,
+            updatedData,
             (company) => company.growth.oneYearEps));
     
     return allGrowthRows;

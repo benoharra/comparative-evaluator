@@ -7,7 +7,8 @@ import { getLeverageKeys, getConfig } from '../../config';
 
 export const buildLeverageMetrics = function(
     companyList: CompanyProps[],
-    weights: Map<string, number>
+    weights: Map<string, number>,
+    updatedData: Map<string, Map<string, any>>
 ) : RowData[] {
     let allLeverageRows: RowData[] = [{
         label: Constants.LEVERAGE,
@@ -17,12 +18,14 @@ export const buildLeverageMetrics = function(
     allLeverageRows.push(
         buildFactorRow(companyList, weights,
             config.leverage.debtToEquity,
+            updatedData,
             (company) => company.leverage.debtToEquity));
     allLeverageRows.push(
         buildFactorRow(
             companyList,
             weights,
             config.leverage.interestCoverage,
+            updatedData,
             (company) => company.leverage.interestCoverage));
 
     return allLeverageRows;

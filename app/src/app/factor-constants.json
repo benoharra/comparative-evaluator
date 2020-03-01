@@ -48,17 +48,17 @@
     "efficiency": {
         "receivablesTurnover": {
             "type": "number",
-            "display": "Receivables Turnover Ratio",
+            "display": "Receivables Turnover",
             "key": "receivablesTurn"
         },
         "assetTurnover": {
             "type": "number",
-            "display": "Asset Turnover Ratio",
+            "display": "Asset Turnover",
             "key": "assetsTurn"
         },
         "inventoryTurnover": {
             "type": "number",
-            "display": "Inventory Turnover Ratio",
+            "display": "Inventory Turnover",
             "key": "inventoryTurn"
         }
     },

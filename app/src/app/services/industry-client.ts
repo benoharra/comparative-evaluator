@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { IndustryProps, IndustryView, RankingsView, IndustryServerDto, IndustryViewServerDto } from '../dto/industry-dtos';
 import { CompanyName } from '../dto/company-dtos';
-import { handleErrorArray } from './client-utils';
+import { handleErrorArray, objectToMap, mapToObject } from './client-utils';
 
 const axiosConfig = {
     baseURL: 'http://localhost:8080/comp-eval/industry',
@@ -28,23 +28,19 @@ export async function getIndustryView(industryName: string): Promise<IndustryVie
     .then(response => {
         const serverDto = response.data;
         const serverIndustry = serverDto.industry;
-        const mapWeights = new Map<string, number>();
-        Object.keys(serverIndustry.weights).forEach(key => {
-            mapWeights.set(key, serverIndustry.weights[key]);
-        });
         return <IndustryView>{
             industry: {
                 name: serverIndustry.name,
                 companies: serverIndustry.companies,
                 dateUpdated: serverIndustry.dateUpdated,
-                weights: mapWeights
+                weights: objectToMap(serverIndustry.weights)
             },
             rankings: serverDto.rankings
         };
     });
 }
 
-export async function saveIndustry(
+export async function saveIndustryData(
     name: string,
     companies: CompanyName[],
     companyFactors: any,
@@ -52,14 +48,13 @@ export async function saveIndustry(
 {
     return await axios.post('/save', 
     {
-        data: {
-            name: name,
-            companies: companies,
-            companyFactors: companyFactors,
-            weights: weights
-        },
-        ...axiosConfig
-    }).then(() => true)
+        name: name,
+        companies: companies,
+        companyFactors: companyFactors,
+        weights: mapToObject(weights)
+    },
+    axiosConfig)
+    .then(() => true)
     .catch(e =>{
         console.log(e);
         return false;

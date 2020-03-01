@@ -6,66 +6,113 @@ import { createElement,
         } from 'react';
 import { CompanyProps } from './data-mocker'
 import { getSectorColumns } from './sector-columns';
-import { buildSectorRowData } from './sector-row-data';
+import { RowData, buildSectorRowData } from './sector-row-data';
 import { blankCompany } from './data-mocker';
 import { TotalWeight } from './input/total-weight';
 
 import ReactTable from "react-table";
 
 import "react-table/react-table.css";
+import { saveIndustryData } from '../services/industry-client';
+import { CompanyList } from '../home/company-list';
+import { UpdatedDataPoint } from './input/cell/factor';
+import { string } from 'prop-types';
 
 interface Props {
     companyList: CompanyProps[];
     weights: Map<string, number>;
+    industryName: string;
 }
 
+
 export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
-    var companies = props.companyList;
-    var weights = props.weights;
     const [tableColumns, setTableColumns] = useState(
-        getSectorColumns(
-            props.companyList,
-             addColumn, 
-             removeColumn,
-             onWeightChange));
+        {
+            companies: props.companyList,
+            columns: getSectorColumns(
+                props.companyList,
+                 addColumn, 
+                 removeColumn,
+                 onWeightChange,
+                 onUpdateData)
+        });
 
     const [tableData, setTableData] = useState(
-        buildSectorRowData(companies, weights));
+        {
+            companyData: buildSectorRowData(
+                props.companyList, 
+                props.weights,
+                new Map()),
+            weights: props.weights,
+            dataUpdates: new Map<string, Map<string, any>>()
+        });
 
     function addColumn() {
-        companies.push(blankCompany);
-        setTableColumns(
-            getSectorColumns(
-                companies, 
+        tableColumns.companies.push(blankCompany);
+        setTableColumns({
+            companies: tableColumns.companies,
+            columns: getSectorColumns(
+                tableColumns.companies, 
                 addColumn, 
                 removeColumn,
-                onWeightChange));
+                onWeightChange,
+                onUpdateData)
+        });
     }
 
     function removeColumn(companyName: string) {
-        companies = companies.filter((company: CompanyProps) => company.name !== companyName);
-        setTableColumns(
-            getSectorColumns(
-                companies, 
+        tableColumns.companies = tableColumns.companies.filter((company: CompanyProps) => company.name !== companyName);
+        setTableColumns({
+            companies: tableColumns.companies,
+            columns: getSectorColumns(
+                tableColumns.companies, 
                 addColumn, 
                 removeColumn,
-                onWeightChange));
+                onWeightChange,
+                onUpdateData)
+        });
     }
 
     function onWeightChange(factor: string, value: number) {
-        // TODO: Weight sums not adding up anymore
-        weights.set(factor, value);
-        setTableData(buildSectorRowData(companies, weights));
+        tableData.weights.set(factor, value);
+        setTableData({
+            companyData: buildSectorRowData(
+                tableColumns.companies, 
+                tableData.weights,
+                tableData.dataUpdates),
+            weights: tableData.weights,
+            dataUpdates: tableData.dataUpdates});
     }
 
     function getTotalWeight(): number {
-        return [...weights]
+        return [...tableData.weights]
         .map(item => item[1])
         .reduce((sum: number, value: number) => sum + value);
     }
 
-    function saveIndustry() {
+    function onUpdateData(updatedDataPoint: UpdatedDataPoint) {
+        const newDataUpdates = tableData.dataUpdates;
+        const row: Map<string, any> = newDataUpdates.has(updatedDataPoint.rowLabel) ? 
+            newDataUpdates.get(updatedDataPoint.rowLabel) as Map<string, any>
+            : new Map<string, any>();
+        row.set(updatedDataPoint.ticker, updatedDataPoint.newValue);
+        newDataUpdates.set(updatedDataPoint.rowLabel, row);
+        setTableData({
+            companyData: buildSectorRowData(
+                tableColumns.companies,
+                tableData.weights,
+                newDataUpdates
+            ),
+            weights: tableData.weights,
+            dataUpdates: newDataUpdates});
+    }
 
+    function saveIndustry() {
+        saveIndustryData(
+            props.industryName,
+            tableColumns.companies.map(company => ({name: company.name, ticker: company.ticker})),
+            tableData.companyData,
+            tableData.weights);
     }
 
     function rankIndustry() {
@@ -75,8 +122,8 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
     return (
         <div style={{padding: '10px'}}>
             <ReactTable
-                data={tableData}
-                columns={tableColumns}
+                data={tableData.companyData}
+                columns={tableColumns.columns}
                 defaultPageSize = {20}
                 sortable={false}
                 showPagination={false}

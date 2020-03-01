@@ -7,7 +7,8 @@ import { getConfig, getProfitabilityKeys } from '../../config';
 
 export const buildProfitMetrics = function(
     companyList: CompanyProps[],
-    weights: Map<string, number>
+    weights: Map<string, number>,
+    updatedData: Map<string, Map<string, any>>
 ) : RowData[] {
     let allProfitRows: RowData[] = [{
         label: Constants.PROFITABILITY,
@@ -19,24 +20,28 @@ export const buildProfitMetrics = function(
             companyList, 
             weights, 
             config.profitability.grossProfitMargin, 
+            updatedData,
             (company) => company.profitability.grossProfitMargin));
     allProfitRows.push(
         buildFactorRow(
             companyList, 
             weights,
             config.profitability.netProfitMargin,
+            updatedData,
             (company) => company.profitability.netProfitMargin));
     allProfitRows.push(
         buildFactorRow(
             companyList, 
             weights, 
             config.profitability.returnOnEquity, 
+            updatedData,
             (company) => company.profitability.returnOnEquity));
     allProfitRows.push(
         buildFactorRow(
             companyList, 
             weights,
             config.profitability.returnOnInvestment,
+            updatedData,
             (company) => company.profitability.returnOnInvestment));
 
     return allProfitRows;

@@ -5,7 +5,7 @@ import { Column, CellInfo } from "react-table";
 
 import { CompanyProps } from './data-mocker';
 
-import { Factor } from './input/cell/factor';
+import { Factor, UpdatedDataPoint } from './input/cell/factor';
 import { Weight } from './input/cell/weight';
 import { CompanyNameHeader } from './input/cell/company-header';
 import { RowHeader } from './input/cell/row-header';
@@ -16,7 +16,8 @@ export const getSectorColumns = function(
     companyList: CompanyProps[],
     onUpdateColumns: () => void,
     onRemoveColumn: (companyName: string) => void,
-    onWeightChange: (factor: string, newWeight: number) => void
+    onWeightChange: (factor: string, newWeight: number) => void,
+    onUpdateData: (updatedDataPoint: UpdatedDataPoint) => void
 ): any {
     // Add the data header names to the first column
     let columns: any[] = [{
@@ -35,7 +36,12 @@ export const getSectorColumns = function(
                           />,
             accessor: company.ticker,
             minWidth: 140,
-            Cell: (cellInfo: CellInfo) => <Factor value={cellInfo.value} rowLabel={cellInfo.original}/>
+            Cell: (cellInfo: CellInfo) => <Factor 
+                                            value={cellInfo.value} 
+                                            rowLabel={cellInfo.original}
+                                            ticker={company.ticker}
+                                            onValueUpdated={onUpdateData}
+                                            />
         }));
 
     // Add the add columns button
