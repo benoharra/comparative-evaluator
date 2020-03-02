@@ -4,7 +4,8 @@ import { createElement, FunctionComponent, useState } from 'react';
 
 interface Props {
     name: string,
-    isNew: boolean
+    isNew: boolean,
+    onUpdateIndustryName: (newName: string) => void
 }
 
 export const IndustryName: FunctionComponent<Props> = (props: Props): any => {
@@ -14,13 +15,18 @@ export const IndustryName: FunctionComponent<Props> = (props: Props): any => {
         setName(event.currentTarget.value);
     }
 
+    function onBlur() {
+        props.onUpdateIndustryName(name);
+    }
+
     if(props.isNew) {
         return (
             <input
                 style={{textAlign: 'left', fontSize: '18px', marginLeft: '10px'}}
                 type="text"
                 value= {name}
-                onChange={onInputChange} />
+                onChange={onInputChange}
+                onBlur={onBlur} />
         );
     } else {
         return (        

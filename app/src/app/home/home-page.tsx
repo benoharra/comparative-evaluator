@@ -2,19 +2,11 @@ import * as React from 'react';
 
 import {
     createElement,
-    FunctionComponent,
-    ReactNode,
-} from 'react';
+    FunctionComponent} 
+    from 'react';
 
-import {
-    BrowserRouter as Router,
-    Switch, Route, Link
-} from 'react-router-dom';
-
-import { IndustryPage } from '../sector/industry-page';
 import { IndustryList } from './industry-list';
 import { CompanyList } from './company-list';
-import { testCompanies, CompanyProps } from './../sector/data-mocker';
 
 
 interface Props {

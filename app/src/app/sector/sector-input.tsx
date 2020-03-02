@@ -4,26 +4,26 @@ import { createElement,
          FunctionComponent,
          useState,
         } from 'react';
-import { CompanyProps } from './data-mocker'
+import { CompanyProps } from './../dto/company-dtos';
+import { IndustryName } from './input/industry-name';
 import { getSectorColumns } from './sector-columns';
-import { RowData, buildSectorRowData } from './sector-row-data';
+import { buildSectorRowData } from './sector-row-data';
 import { blankCompany } from './data-mocker';
 import { TotalWeight } from './input/total-weight';
 
 import ReactTable from "react-table";
 
 import "react-table/react-table.css";
-import { saveIndustryData } from '../services/industry-client';
-import { CompanyList } from '../home/company-list';
+import { saveIndustryData, rankIndustryData } from '../services/industry-client';
 import { UpdatedDataPoint } from './input/cell/factor';
 import { Constants } from './../constants';
 import { getFactorKeyFromName } from '../config';
-import { string } from 'prop-types';
 
 interface Props {
     companyList: CompanyProps[];
     weights: Map<string, number>;
     industryName: string;
+    isNew: boolean
 }
 
 
@@ -47,7 +47,8 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
                 props.weights,
                 new Map()),
             weights: props.weights,
-            dataUpdates: new Map<string, Map<string, any>>()
+            dataUpdates: new Map<string, Map<string, any>>(),
+            industryName: props.industryName
         });
 
     function addColumn() {
@@ -86,7 +87,8 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
                 tableData.weights,
                 tableData.dataUpdates),
             weights: tableData.weights,
-            dataUpdates: tableData.dataUpdates});
+            dataUpdates: tableData.dataUpdates,
+            industryName: tableData.industryName});
     }
 
     function getTotalWeight(): number {
@@ -109,7 +111,8 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
                 newDataUpdates
             ),
             weights: tableData.weights,
-            dataUpdates: newDataUpdates});
+            dataUpdates: newDataUpdates,
+            industryName: tableData.industryName});
     }
 
     function onUpdateCompanyName(oldName:string, oldTicker: string, newName: string, newTicker: string) {
@@ -150,8 +153,18 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
                     newDataUpdates
                 ),
                 weights: tableData.weights,
-                dataUpdates: newDataUpdates});
+                dataUpdates: newDataUpdates,
+                industryName: tableData.industryName});
         }
+    }
+
+    function onUpdateIndustryName(newName: string) {
+        setTableData({
+            companyData: tableData.companyData,
+            weights: tableData.weights,
+            dataUpdates: tableData.dataUpdates,
+            industryName: newName
+        });
     }
 
     function saveIndustry() {
@@ -163,7 +176,12 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
     }
 
     function rankIndustry() {
-
+        rankIndustryData(
+            props.industryName,
+            tableColumns.companies.map(company => ({name: company.name, ticker: company.ticker})),
+            buildFactorMapToSubmit(),
+            tableData.weights)
+        .then(data => console.log(data));
     }
 
     function buildFactorMapToSubmit(): Map<string, number> {
@@ -185,27 +203,33 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
     }
 
     return (
-        <div style={{padding: '10px'}}>
-            <ReactTable
-                data={tableData.companyData}
-                columns={tableColumns.columns}
-                defaultPageSize = {20}
-                sortable={false}
-                showPagination={false}
-            />
-            <div style={{flexDirection: 'column', float: 'right'}}>
-                <TotalWeight total={getTotalWeight()}/>
-                <div style={{flexDirection: 'row', 
-                    padding: '10px 20px 10px 10px'}}>
-                    <button onClick={e => saveIndustry()} style={{padding:'10px', margin: '10px'}}>
-                        Save Industry
-                    </button>
-                    <button onClick={e => rankIndustry()} style={{padding: '10px'}}>
-                        Submit For Ranking
-                    </button>
+        <React.Fragment>
+            <IndustryName 
+                name={tableData.industryName} 
+                isNew={props.isNew}
+                onUpdateIndustryName={onUpdateIndustryName}/>
+            <div style={{padding: '10px'}}>
+                <ReactTable
+                    data={tableData.companyData}
+                    columns={tableColumns.columns}
+                    defaultPageSize = {21}
+                    sortable={false}
+                    showPagination={false}
+                />
+                <div style={{flexDirection: 'column', float: 'right'}}>
+                    <TotalWeight total={getTotalWeight()}/>
+                    <div style={{flexDirection: 'row', 
+                        padding: '10px 20px 10px 10px'}}>
+                        <button onClick={e => saveIndustry()} style={{padding:'10px', margin: '10px'}}>
+                            Save Industry
+                        </button>
+                        <button onClick={e => rankIndustry()} style={{padding: '10px'}}>
+                            Submit For Ranking
+                        </button>
+                    </div>
                 </div>
             </div>
+        </React.Fragment>
 
-        </div>
     );
 };

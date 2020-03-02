@@ -1,5 +1,5 @@
 import { RowData } from './../sector-row-data';
-import { CompanyProps } from './../data-mocker';
+import { CompanyProps } from './../../dto/company-dtos';
 import { Constants } from './../../constants';
 
 import { buildFactorRow, calculateCategoryWeight } from './inputDataUtils';

@@ -9,7 +9,7 @@ interface Props {
 
 export const RowHeader: FunctionComponent<Props> = (props: Props): any => {
     // Render Factor Categories as bold and left aligned
-    if(Constants.FACTOR_CATEGORIES.has(props.rowName.label)) {
+    if(Constants.FACTOR_CATEGORIES.has(props.rowName.label) || Constants.PE === props.rowName.label) {
         return (
             <span style={{fontWeight:'bold'}}>{props.value}</span>
         );

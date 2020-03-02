@@ -1,7 +1,6 @@
 import { RowData } from './../sector-row-data';
-import { CompanyProps } from './../data-mocker';
+import { CompanyProps } from './../../dto/company-dtos';
 import { FactorConfig } from '../../config';
-import { string } from 'prop-types';
 
 export const calculateCategoryWeight = function(
     categoryFactors: string[],

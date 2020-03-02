@@ -1,4 +1,5 @@
 import { Constants } from '../constants';
+import { CompanyProps } from '../dto/company-dtos';
 
 interface Profitability {
     grossProfitMargin: number;
@@ -30,16 +31,6 @@ interface Efficiency {
     assetTurnover: number;
 }
 
-export interface CompanyProps {
-    name: string,
-    ticker: string,
-    profitability: Profitability;
-    liquidity: Liquidity;
-    leverage: Leverage;
-    growth: Growth;
-    efficiency: Efficiency;
-}
-
 export interface IndustryProps {
     name: string,
     companies: string[],
@@ -69,6 +60,7 @@ export const blankCompany: CompanyProps =
     {
         name: "New Company",
         ticker: "Blank",
+        pe: 0,
         profitability: {
             grossProfitMargin: 0,
             netProfitMargin: 0,
@@ -119,6 +111,7 @@ export const testCompanies: CompanyProps[] = [
     {
         name: "Test1",
         ticker: "T1",
+        pe: 25,
         profitability: {
             grossProfitMargin: 77.7,
             netProfitMargin: 12.5,
@@ -148,6 +141,7 @@ export const testCompanies: CompanyProps[] = [
     {
         name: "Test2",
         ticker: "T2",
+        pe: 30,
         profitability: {
             grossProfitMargin: 87.7,
             netProfitMargin: 22.5,

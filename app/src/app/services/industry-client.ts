@@ -61,21 +61,21 @@ export async function saveIndustryData(
     })
 }
 
-export async function rankIndustry(
+export async function rankIndustryData(
     name: string,
     companies: CompanyName[],
-    companyFactors: any,
+    companyFactors: Map<string, number>,
     weights: Map<string, number>) 
 {
-    return axios.post<RankingsView>('/analyze', {
-        data: {
-            name: name,
-            companies: companies,
-            companyFactors: companyFactors,
-            weights: weights
-        },
-        ...axiosConfig
-    }).then(response => response.data)
+    return await axios.post<RankingsView>('/analyze',
+     {
+        name: name,
+        companies: companies,
+        companyFactors: mapToObject(companyFactors),
+        weights: weights
+    },
+    axiosConfig)
+    .then(response => response.data)
     .catch(e => {
         console.log(e);
         return null;

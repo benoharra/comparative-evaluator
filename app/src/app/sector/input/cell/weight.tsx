@@ -27,7 +27,7 @@ export const Weight: FunctionComponent<Props> = (props: Props): any => {
         }
     }
 
-    if (Constants.FACTOR_CATEGORIES.has(props.row.label)) {
+    if (Constants.FACTOR_CATEGORIES.has(props.row.label) || Constants.PE === props.row.label) {
         return (
             <div style={{textAlign:'center', fontWeight:'bold'}}>
                     {`${props.value}%`}

@@ -10,7 +10,8 @@ import {
 
 import { SectorInput } from './sector-input';
 import { IndustryName } from './input/industry-name';
-import { testCompanies, defaultWeights, CompanyProps } from './data-mocker';
+import { CompanyProps } from './../dto/company-dtos';
+import { testCompanies, defaultWeights } from './data-mocker';
 import { useParams } from 'react-router';
 
 import { getIndustryView } from '../services/industry-client';
@@ -75,11 +76,11 @@ export const IndustryPage: FunctionComponent = function() {
     return (
       <Fragment>
         <h1>Add/Edit a sector</h1>
-        <IndustryName name={state.industryName} isNew={state.isNew}/>
         <SectorInput 
           companyList={state.companies} 
           weights={state.weights} 
-          industryName={state.industryName}/>
+          industryName={state.industryName}
+          isNew={state.isNew}/>
       </Fragment>
     );
   }

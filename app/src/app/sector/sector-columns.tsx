@@ -3,7 +3,7 @@ import { FunctionComponent, ReactNode, createElement } from 'react';
 
 import { Column, CellInfo } from "react-table";
 
-import { CompanyProps } from './data-mocker';
+import { CompanyProps } from './../dto/company-dtos';
 
 import { Factor, UpdatedDataPoint } from './input/cell/factor';
 import { Weight } from './input/cell/weight';

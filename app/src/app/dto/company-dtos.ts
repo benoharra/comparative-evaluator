@@ -1,4 +1,3 @@
-
 // Base Company groups
 interface Profitability {
     grossProfitMargin: number;
@@ -33,6 +32,7 @@ interface Efficiency {
 export interface CompanyProps {
     name: string,
     ticker: string,
+    pe: number,
     profitability: Profitability;
     liquidity: Liquidity;
     leverage: Leverage;

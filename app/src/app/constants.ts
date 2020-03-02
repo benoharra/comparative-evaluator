@@ -1,4 +1,5 @@
 export class Constants {
+    public static get PE(): string { return "P/E"};
     // Factor categories
     public static get PROFITABILITY(): string { return "Profitability"; };
     public static get LEVERAGE(): string { return "Leverage"; }
