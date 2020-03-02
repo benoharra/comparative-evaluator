@@ -1,3 +1,6 @@
+import { Constants } from '../constants';
+import { CompanyProps } from '../dto/company-dtos';
+
 interface Profitability {
     grossProfitMargin: number;
     netProfitMargin: number;
@@ -26,16 +29,6 @@ interface Efficiency {
     receivableTurnover: number;
     inventoryTurnover: number;
     assetTurnover: number;
-}
-
-export interface CompanyProps {
-    name: string,
-    ticker: string,
-    profitability: Profitability;
-    liquidity: Liquidity;
-    leverage: Leverage;
-    growth: Growth;
-    efficiency: Efficiency;
 }
 
 export interface IndustryProps {
@@ -67,6 +60,7 @@ export const blankCompany: CompanyProps =
     {
         name: "New Company",
         ticker: "Blank",
+        pe: 0,
         profitability: {
             grossProfitMargin: 0,
             netProfitMargin: 0,
@@ -94,10 +88,30 @@ export const blankCompany: CompanyProps =
         }
     };
 
+export const defaultWeights: Map<string, number> = 
+    new Map([
+        [Constants.GROSS_PROFIT, 12],
+        [Constants.NET_PROFIT, 12],
+        [Constants.ROE, 6],
+        [Constants.ROI, 6],
+        [Constants.QUICK_RATIO, 6],
+        [Constants.CURRENT_RATIO, 6],
+        [Constants.DEBT_TO_EQUITY, 6],
+        [Constants.INTEREST_COVERAGE, 6],
+        [Constants.RECEIVABLES_TURN, 6],
+        [Constants.ASSET_TURN, 6],
+        [Constants.INVENTORY_TURN, 6],
+        [Constants.FIVE_YR_REV, 10],
+        [Constants.FIVE_YR_EPS, 5],
+        [Constants.ONE_YR_REV, 10],
+        [Constants.ONE_YR_EPS, 5]
+    ]);
+
 export const testCompanies: CompanyProps[] = [
     {
         name: "Test1",
         ticker: "T1",
+        pe: 25,
         profitability: {
             grossProfitMargin: 77.7,
             netProfitMargin: 12.5,
@@ -127,6 +141,7 @@ export const testCompanies: CompanyProps[] = [
     {
         name: "Test2",
         ticker: "T2",
+        pe: 30,
         profitability: {
             grossProfitMargin: 87.7,
             netProfitMargin: 22.5,

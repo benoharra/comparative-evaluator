@@ -18,7 +18,8 @@ data class Leverage (
 
 data class Efficiency (
         val receivableTurnover: Float?,
-        val inventoryTurnover: Float?
+        val inventoryTurnover: Float?,
+        val assetTurnover: Float?
 )
 
 data class Growth (

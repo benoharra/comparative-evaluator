@@ -1,40 +1,47 @@
 import { RowData } from './../sector-row-data';
-import { CompanyProps } from './../data-mocker';
+import { CompanyProps } from './../../dto/company-dtos';
 import { Constants } from './../../constants';
 
 import { buildFactorRow, calculateCategoryWeight } from './inputDataUtils';
+import { getConfig, getGrowthKeys } from '../../config';
 
 export const buildGrowthMetrics = function(
     companyList: CompanyProps[],
-    weights: Map<string, number>
+    weights: Map<string, number>,
+    updatedData: Map<string, Map<string, any>>
 ) : RowData[] {
     let allGrowthRows: RowData[] = [{
         label: Constants.GROWTH,
-        weight: calculateCategoryWeight(Constants.GROWTH_FACTORS, weights)
+        weight: calculateCategoryWeight(getGrowthKeys(), weights)
     }];
+    const config = getConfig();
     allGrowthRows.push(
         buildFactorRow(
             companyList,
             weights,
-            Constants.FIVE_YR_REV,
+            config.growth.fiveYearRevenue,
+            updatedData,
             (company) => company.growth.fiveYearRev));
     allGrowthRows.push(
         buildFactorRow(
             companyList,
             weights,
-            Constants.FIVE_YR_EPS,
+            config.growth.fiveYearEps,
+            updatedData,
             (company) => company.growth.fiveYearEps));
     allGrowthRows.push(
         buildFactorRow(
             companyList,
             weights,
-            Constants.ONE_YR_REV,
+            config.growth.oneYearRevenue,
+            updatedData,
             (company) => company.growth.oneYearRev));
     allGrowthRows.push(
         buildFactorRow(
             companyList,
             weights,
-            Constants.ONE_YR_EPS,
+            config.growth.oneYearEps,
+            updatedData,
             (company) => company.growth.oneYearEps));
     
     return allGrowthRows;

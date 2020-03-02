@@ -7,8 +7,8 @@ import {
 
 import ReactTable from "react-table";
 import { CellInfo } from "react-table";
-import { Link } from 'react-router-dom';
-import { IndustryProps } from './../dto/server-dtos';
+import { Link, useHistory } from 'react-router-dom';
+import { IndustryProps } from '../dto/industry-dtos';
 import { getAllIndustries } from '../services/industry-client';
 
 
@@ -18,6 +18,8 @@ interface TableState {
 }
 
 export const IndustryList: FunctionComponent = (): any => {
+
+    const history = useHistory();
     const [tableState, setTableState] = useState({ data: [], loading: true } as TableState)
 
     function fetchData(): void {
@@ -25,11 +27,16 @@ export const IndustryList: FunctionComponent = (): any => {
             .then((industries) => setTableState({ data: industries, loading: false }));
     }
 
+    function newAnalysisClicked(): void {
+        history.push("/industry/new");
+    }
+
     return (
         <div style={{width: '45%'}}>
             <h2 style={{ display: 'flex', justifyContent: 'center' }}>
                 Industries
             </h2>
+            <button style={{alignContent: 'right'}} onClick={newAnalysisClicked}>New Analysis</button>
             <ReactTable
                 data={tableState.data}
                 loading={tableState.loading}
@@ -39,7 +46,7 @@ export const IndustryList: FunctionComponent = (): any => {
                         Header: "Industry",
                         accessor: "name",
                         Cell: (cellInfo: CellInfo) => (
-                            <Link to="/industry">
+                            <Link to={`/industry/${cellInfo.value}`}>
                                 {cellInfo.value}
                             </Link>
                         )

@@ -28,10 +28,11 @@ interface Efficiency {
     inventoryTurnover: number;
     assetTurnover: number;
 }
-// Base Company and Industry
+
 export interface CompanyProps {
     name: string,
     ticker: string,
+    pe: number,
     profitability: Profitability;
     liquidity: Liquidity;
     leverage: Leverage;
@@ -39,17 +40,32 @@ export interface CompanyProps {
     efficiency: Efficiency;
 }
 
+// Ranking and display dtos
+export interface CompanyName {
+    name: string,
+    ticker: string
+}
+
 export interface CompanyInfo {
-    companyName: {
-        name: string,
-        ticker: string
-    },
+    companyName: CompanyName,
     industries: string[]
 }
 
-export interface IndustryProps {
-    name: string,
-    companies: CompanyProps[],
+export interface Recommendation {
+    buyRating: number,
+    action: string
+}
+
+export interface Ranking {
+    companyName: CompanyName,
+    averageRanking: number,
+    pe: number,
+    recommendation: Recommendation
+}
+
+export interface CompanyView {
+    name: CompanyName,
     dateUpdated: string,
-    weights: Map<string, number>
+    industries: string[],
+    data: CompanyProps
 }

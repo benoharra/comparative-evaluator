@@ -7,7 +7,7 @@ import {
 
 import ReactTable from "react-table";
 import { CellInfo } from "react-table";
-import { CompanyInfo } from './../dto/server-dtos';
+import { CompanyInfo } from '../dto/company-dtos';
 import { Link } from 'react-router-dom';
 import { getAllCompanies } from '../services/company-client';
 

@@ -36,7 +36,8 @@ fun buildCompany(name: String, ticker: String, factors: Map<String, Float>): Com
                 ),
                 Efficiency(
                         factors["$ticker.${Factor.RECEIVABLE_TURNOVER}"],
-                        factors["$ticker.${Factor.INVENTORY_TURNOVER}"]
+                        factors["$ticker.${Factor.INVENTORY_TURNOVER}"],
+                        factors["$ticker.${Factor.ASSET_TURNOVER}"]
                 ),
                 Growth(
                         factors["$ticker.${Factor.FIVE_YEAR_SALES}"],
@@ -74,6 +75,7 @@ private fun addLeverageFactors(leverage: Leverage?, factors: MutableMap<String, 
 private fun addEfficiencyFactors(efficiency: Efficiency?, factors: MutableMap<String, Factor>) {
     efficiency?.receivableTurnover?.let { factors[Factor.RECEIVABLE_TURNOVER] = Factor(efficiency.receivableTurnover) }
     efficiency?.inventoryTurnover?.let { factors[Factor.INVENTORY_TURNOVER] = Factor(efficiency.inventoryTurnover) }
+    efficiency?.assetTurnover?.let { factors[Factor.ASSET_TURNOVER] = Factor(efficiency.assetTurnover) }
 }
 
 private fun addGrowthFactors(growth: Growth?, factors: MutableMap<String, Factor>) {
