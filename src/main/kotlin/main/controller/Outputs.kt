@@ -19,8 +19,7 @@ data class RankingsView(
 )
 
 data class IndustryView(
-        val industry: Industry?,
-        val rankings: RankingsView?
+        val industry: Industry?
 )
 
 data class CompanyView(

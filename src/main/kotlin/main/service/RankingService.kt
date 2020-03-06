@@ -13,7 +13,7 @@ class RankingService @Autowired constructor(
         private val rankingRepository: RankingRepository
 ) {
 
-    fun performRanking(industry: Industry) : RankingsView {
+    fun performRanking(industry: Industry) {
         // Map the company factors to their tickers so the data is available for ranking
         val companyFactors: Map<String, Map<String, Factor>> = industry.companies.associateBy({it.ticker}, { mapAllFactors(it)})
 
@@ -37,13 +37,11 @@ class RankingService @Autowired constructor(
         // Save the ranking and industry data
         rankingRepository.save(industryRanking)
         industryService.submitAfterRanking(industry, recommendations)
-
-        return industryRanking.toRankingView()
     }
 
-    fun getIndustryRanking(industryName: String) : RankingsView? =
+    fun getIndustryRanking(industryName: String) : RankingsView =
         rankingRepository.findById(industryName).orElse(null)
-                ?.toRankingView()
+                ?.toRankingView() ?: throw IllegalArgumentException()
 
     private fun IndustryRanking.toRankingView() : RankingsView =
             RankingsView(

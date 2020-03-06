@@ -15,8 +15,7 @@ export interface RankingsView {
 }
 
 export interface IndustryView {
-    industry: IndustryProps,
-    rankings?: RankingsView
+    industry: IndustryProps
 }
 
 export interface IndustryServerDto {

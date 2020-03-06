@@ -34,9 +34,20 @@ export async function getIndustryView(industryName: string): Promise<IndustryVie
                 companies: serverIndustry.companies,
                 dateUpdated: serverIndustry.dateUpdated,
                 weights: objectToMap(serverIndustry.weights)
-            },
-            rankings: serverDto.rankings
+            }
         };
+    });
+}
+
+export async function getRankingsView(industryName: string): Promise<RankingsView> {
+    return await axios.get<RankingsView>('/ranking', {
+        params: {
+            name: industryName
+        },
+        ...axiosConfig
+    })
+    .then(response => {
+        return response.data;
     });
 }
 
@@ -67,17 +78,12 @@ export async function rankIndustryData(
     companyFactors: Map<string, number>,
     weights: Map<string, number>) 
 {
-    return await axios.post<RankingsView>('/analyze',
+    return axios.post<RankingsView>('/analyze',
      {
         name: name,
         companies: companies,
         companyFactors: mapToObject(companyFactors),
         weights: weights
     },
-    axiosConfig)
-    .then(response => response.data)
-    .catch(e => {
-        console.log(e);
-        return null;
-    })
+    axiosConfig);
 }
