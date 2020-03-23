@@ -172,7 +172,7 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
 
     function saveIndustry() {
         saveIndustryData(
-            props.industryName,
+            tableData.industryName,
             tableColumns.companies.map(company => ({name: company.name, ticker: company.ticker})),
             buildFactorMapToSubmit(),
             tableData.weights);
@@ -180,12 +180,11 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
 
     function rankIndustry() {
         rankIndustryData(
-            props.industryName,
+            tableData.industryName,
             tableColumns.companies.map(company => ({name: company.name, ticker: company.ticker})),
             buildFactorMapToSubmit(),
             tableData.weights)
         .then(() => history.push(`/ranking/${tableData.industryName}`))
-        .then(() => console.log("HMmmm...."))
         .catch((e) => console.log(e));
     }
 
@@ -203,6 +202,13 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
                     }
                 }
             });
+        
+        tableData.dataUpdates.forEach((updateRow, rowName) => {
+            const rowKey = getFactorKeyFromName(rowName);
+            updateRow.forEach((value, ticker) => {
+                data.set(`${ticker}.${rowKey}`, parseFloat(value));
+            });
+        });
         
         return data;
     }

@@ -7,7 +7,8 @@ class Factor(val value: Float,
     companion object {
         const val GROSS_PROFIT = "grossProfitMargin"
         const val NET_PROFIT = "netProfitMargin"
-        const val ROE = "returnOnEquity"
+        const val ROE = "roe"
+        const val ROI = "roi"
         const val QUICK_RATIO = "quickRatio"
         const val CURRENT_RATIO = "currentRatio"
         const val DEBT_TO_EQUITY = "debtToEquity"
@@ -15,11 +16,11 @@ class Factor(val value: Float,
         const val RECEIVABLE_TURNOVER = "receivableTurnover"
         const val INVENTORY_TURNOVER = "inventoryTurnover"
         const val ASSET_TURNOVER = "assetTurnover"
-        const val FIVE_YEAR_SALES = "fiveYearSales"
-        const val ONE_YEAR_SALES = "oneYearSales"
+        const val FIVE_YEAR_SALES = "fiveYearRev"
+        const val ONE_YEAR_SALES = "oneYearRev"
         const val FIVE_YEAR_EPS = "fiveYearEps"
         const val ONE_YEAR_EPS = "oneYearEps"
-        const val PE = "priceOverEarnings"
+        const val PE = "pe"
     }
 
     override fun compareTo(other: Factor) =

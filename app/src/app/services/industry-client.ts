@@ -83,7 +83,7 @@ export async function rankIndustryData(
         name: name,
         companies: companies,
         companyFactors: mapToObject(companyFactors),
-        weights: weights
+        weights: mapToObject(weights)
     },
     axiosConfig);
 }

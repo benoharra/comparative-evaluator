@@ -40,6 +40,8 @@ export const getFactorKeyFromName = (factorName: string): string => {
             return config.growth.oneYearRevenue.key;
         case Constants.ONE_YR_EPS:
             return config.growth.oneYearEps.key;
+        case Constants.PE:
+            return "pe";
         default: 
             return "";
     }
