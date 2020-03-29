@@ -14,6 +14,7 @@ import org.junit.runner.RunWith
 import org.springframework.test.context.junit4.SpringRunner
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
+import java.util.*
 
 @RunWith(SpringRunner::class)
 class RankingServiceTest {
@@ -41,11 +42,14 @@ class RankingServiceTest {
             val industrySlot = slot<Industry>()
             every { rankingRepository.save(capture(rankingSlot)) } returns industryRanking()
             every { industryService.submitAfterRanking(capture(industrySlot), any()) } just runs
+            every { rankingRepository.findById(industry.name) } returns Optional.of(industryRanking())
 
 
-            val rankingsView = rankingService.performRanking(industry)
+            rankingService.performRanking(industry)
 
-            assertThat(rankingsView.industry).isEqualTo(industry.name)
+            val rankingsView = rankingService.getIndustryRanking(industry.name)
+
+            assertThat(rankingsView.industry).isEqualToIgnoringCase(industry.name)
             assertThat(rankingsView.rankings).hasSize(3)
             // Companies didn't have stats to create valid recommendations, should be no buy rec
             assertThat(rankingsView.bestBuy).isEqualTo(CompanyName("None", "NA"))

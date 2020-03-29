@@ -1,0 +1,17 @@
+{
+    "grossProfitMargin": 10,
+    "netProfitMargin": 10,
+    "roe": 8,
+    "roi": 8,
+    "quickRatio": 4,
+    "currentRatio": 4,
+    "debtToEquity": 10,
+    "interestCoverage": 4,
+    "receivableTurnover": 4,
+    "assetTurnover": 4,
+    "inventoryTurnover": 4,
+    "fiveYearRev": 5,
+    "oneYearRev": 10,
+    "fiveYearEps": 5,
+    "oneYearEps": 10
+}

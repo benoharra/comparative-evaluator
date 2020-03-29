@@ -34,7 +34,8 @@ fun calculateAverageRankings(tickers: List<String>,
         val companiesRankedByFactor = rankFactor(weight.key, tickers, companyFactors)
         // Add the factor rank multiplied by weight to each company
         companiesRankedByFactor.forEach {
-            averageRankings[it.first] = (averageRankings[it.first] ?: 0F).plus(weight.value.times(it.second))
+            // Weight percentages are stored as percentage value, so divide by 100 before using
+            averageRankings[it.first] = (averageRankings[it.first] ?: 0F).plus(weight.value.div(100).times(it.second))
         }
     }
     return averageRankings
