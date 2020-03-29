@@ -29,8 +29,7 @@ export const HomePage: FunctionComponent<Props> = (props: Props): any => {
                 <div style={styles}>
                     <IndustryList />
                     <CompanyList />
-                </div>
-                
+                </div> 
             </div>
     )
 }

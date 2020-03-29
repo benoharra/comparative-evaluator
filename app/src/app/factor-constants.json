@@ -49,17 +49,17 @@
         "receivablesTurnover": {
             "type": "number",
             "display": "Receivables Turnover",
-            "key": "receivablesTurn"
+            "key": "receivableTurnover"
         },
         "assetTurnover": {
             "type": "number",
             "display": "Asset Turnover",
-            "key": "assetsTurn"
+            "key": "assetTurnover"
         },
         "inventoryTurnover": {
             "type": "number",
             "display": "Inventory Turnover",
-            "key": "inventoryTurn"
+            "key": "inventoryTurnover"
         }
     },
     "growth": {

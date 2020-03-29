@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { createElement,
          FunctionComponent,
-         useState,
+         useState
         } from 'react';
 import { CompanyProps } from './../dto/company-dtos';
 import { IndustryName } from './input/industry-name';
@@ -10,6 +10,8 @@ import { getSectorColumns } from './sector-columns';
 import { buildSectorRowData } from './sector-row-data';
 import { blankCompany } from './data-mocker';
 import { TotalWeight } from './input/total-weight';
+
+import { withRouter, useHistory } from 'react-router-dom';
 
 import ReactTable from "react-table";
 
@@ -28,6 +30,7 @@ interface Props {
 
 
 export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
+    const history = useHistory();
     const [tableColumns, setTableColumns] = useState(
         {
             companies: props.companyList,
@@ -94,7 +97,7 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
     function getTotalWeight(): number {
         return [...tableData.weights]
         .map(item => item[1])
-        .reduce((sum: number, value: number) => sum + value);
+        .reduce((sum: number, value: number) => sum + value, 0);
     }
 
     function onUpdateData(updatedDataPoint: UpdatedDataPoint) {
@@ -169,7 +172,7 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
 
     function saveIndustry() {
         saveIndustryData(
-            props.industryName,
+            tableData.industryName,
             tableColumns.companies.map(company => ({name: company.name, ticker: company.ticker})),
             buildFactorMapToSubmit(),
             tableData.weights);
@@ -177,11 +180,12 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
 
     function rankIndustry() {
         rankIndustryData(
-            props.industryName,
+            tableData.industryName,
             tableColumns.companies.map(company => ({name: company.name, ticker: company.ticker})),
             buildFactorMapToSubmit(),
             tableData.weights)
-        .then(data => console.log(data));
+        .then(() => history.push(`/ranking/${tableData.industryName}`))
+        .catch((e) => console.log(e));
     }
 
     function buildFactorMapToSubmit(): Map<string, number> {
@@ -198,6 +202,13 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
                     }
                 }
             });
+        
+        tableData.dataUpdates.forEach((updateRow, rowName) => {
+            const rowKey = getFactorKeyFromName(rowName);
+            updateRow.forEach((value, ticker) => {
+                data.set(`${ticker}.${rowKey}`, parseFloat(value));
+            });
+        });
         
         return data;
     }

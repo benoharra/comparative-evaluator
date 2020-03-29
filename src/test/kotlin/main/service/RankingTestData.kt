@@ -39,12 +39,12 @@ fun tickers() : MutableList<String> =
 
 // Weights have 2 factors from profitability, then 1 factor from each other group with 100% total weight
 fun weights() : MutableMap<String, Float> =
-        mutableMapOf(Pair(Factor.GROSS_PROFIT, .2F),
-                Pair(Factor.NET_PROFIT, .05F),
-                Pair(Factor.QUICK_RATIO, .15F),
-                Pair(Factor.DEBT_TO_EQUITY, .15F),
-                Pair(Factor.RECEIVABLE_TURNOVER, .15F),
-                Pair(Factor.FIVE_YEAR_SALES, .3F))
+        mutableMapOf(Pair(Factor.GROSS_PROFIT, 20F),
+                Pair(Factor.NET_PROFIT, 5F),
+                Pair(Factor.QUICK_RATIO, 15F),
+                Pair(Factor.DEBT_TO_EQUITY, 15F),
+                Pair(Factor.RECEIVABLE_TURNOVER, 15F),
+                Pair(Factor.FIVE_YEAR_SALES, 30F))
 
 // This method uses tickers from the default set above, Factors should result in perfect company average ranks 1-4
 fun companyFactors() : MutableMap<String, MutableMap<String, Factor>> {

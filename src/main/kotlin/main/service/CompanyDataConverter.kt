@@ -24,7 +24,8 @@ fun buildCompany(name: String, ticker: String, factors: Map<String, Float>): Com
                 Profitability(
                         factors["$ticker.${Factor.GROSS_PROFIT}"],
                         factors["$ticker.${Factor.NET_PROFIT}"],
-                        factors["$ticker.${Factor.ROE}"]
+                        factors["$ticker.${Factor.ROE}"],
+                        factors["$ticker.${Factor.ROI}"]
                 ),
                 Liquidity(
                         factors["$ticker.${Factor.QUICK_RATIO}"],
@@ -52,6 +53,7 @@ private fun addProfitabilityFactors(profitability: Profitability?, factors: Muta
     profitability?.grossProfitMargin?.let { factors[Factor.GROSS_PROFIT] = Factor(profitability.grossProfitMargin) }
     profitability?.netProfitMargin?.let { factors[Factor.NET_PROFIT] = Factor(profitability.netProfitMargin) }
     profitability?.returnOnEquity?.let { factors[Factor.ROE] = Factor(profitability.returnOnEquity) }
+    profitability?.returnOnInvestment?.let { factors[Factor.ROI] = Factor(profitability.returnOnInvestment) }
 }
 
 private fun addLiquidityFactors(liquidity: Liquidity?, factors: MutableMap<String, Factor>) {
@@ -79,8 +81,8 @@ private fun addEfficiencyFactors(efficiency: Efficiency?, factors: MutableMap<St
 }
 
 private fun addGrowthFactors(growth: Growth?, factors: MutableMap<String, Factor>) {
-    growth?.fiveYearSales?.let { factors[Factor.FIVE_YEAR_SALES] = Factor(growth.fiveYearSales) }
-    growth?.oneYearSales?.let { factors[Factor.ONE_YEAR_SALES] = Factor(growth.oneYearSales) }
+    growth?.fiveYearRev?.let { factors[Factor.FIVE_YEAR_SALES] = Factor(growth.fiveYearRev) }
+    growth?.oneYearRev?.let { factors[Factor.ONE_YEAR_SALES] = Factor(growth.oneYearRev) }
     growth?.fiveYearEps?.let { factors[Factor.FIVE_YEAR_EPS] = Factor(growth.fiveYearEps) }
     growth?.oneYearEps?.let { factors[Factor.ONE_YEAR_EPS] = Factor(growth.oneYearEps) }
 }

@@ -14,7 +14,7 @@ import {
 
 import { HomePage } from './home/home-page';
 import { IndustryPage } from './sector/industry-page';
-
+import { RankingPage } from './ranking/ranking-page';
 
 
 export const App: FunctionComponent = function() {
@@ -24,6 +24,7 @@ export const App: FunctionComponent = function() {
       <Switch>
         <Route exact path="/" component={HomePage}/>  
         <Route path="/industry/:name" component={IndustryPage}/>
+        <Route path="/ranking/:name" component={RankingPage}/>
       </Switch>
     </Router>
   );

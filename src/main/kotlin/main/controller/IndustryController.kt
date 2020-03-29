@@ -22,14 +22,15 @@ class IndustryController @Autowired constructor(
             industryService.getAllIndustries()
 
     @PostMapping("/analyze")
-    fun performAnalysis(@RequestBody industryInput: IndustryInput) : RankingsView =
+    fun performAnalysis(@RequestBody industryInput: IndustryInput)  =
             rankingService.performRanking(convertIndustry(industryInput))
+
+    @GetMapping("/ranking")
+    fun getIndustryRankings(@RequestParam name: String) : RankingsView =
+            rankingService.getIndustryRanking(name)
 
     @GetMapping("/view")
     fun viewIndustry(@RequestParam name: String) : IndustryView =
-            IndustryView(
-                    industryService.getIndustry(name),
-                    rankingService.getIndustryRanking(name)
-            )
+            IndustryView(industryService.getIndustry(name))
 
 }

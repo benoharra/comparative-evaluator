@@ -5,8 +5,6 @@ import { createElement, FunctionComponent, useState } from 'react';
 import { RowData } from './../../sector-row-data';
 
 import { Constants } from './../../../constants';
-import { FactorConfig } from '../../../config';
-import { CellInfo } from 'react-table';
 
 interface Props {
     value: any;

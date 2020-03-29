@@ -3,7 +3,8 @@ package main.model
 data class Profitability (
         val grossProfitMargin: Float?,
         val netProfitMargin: Float?,
-        val returnOnEquity: Float?
+        val returnOnEquity: Float?,
+        val returnOnInvestment: Float?
 )
 
 data class Liquidity (
@@ -23,8 +24,8 @@ data class Efficiency (
 )
 
 data class Growth (
-        val fiveYearSales: Float?,
-        val oneYearSales: Float?,
+        val fiveYearRev: Float?,
+        val oneYearRev: Float?,
         val fiveYearEps: Float?,
         val oneYearEps: Float?
 )

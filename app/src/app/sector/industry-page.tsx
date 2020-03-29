@@ -9,12 +9,11 @@ import {
   Fragment} from 'react';
 
 import { SectorInput } from './sector-input';
-import { IndustryName } from './input/industry-name';
 import { CompanyProps } from './../dto/company-dtos';
-import { testCompanies, defaultWeights } from './data-mocker';
 import { useParams } from 'react-router';
 
 import { getIndustryView } from '../services/industry-client';
+import { getBlankCompany, getDefaultWeights } from '../default-objects';
 
 
 interface State {
@@ -58,8 +57,8 @@ export const IndustryPage: FunctionComponent = function() {
     } else {
         setState({
           industryName: "New Analysis",
-          companies: testCompanies,
-          weights: defaultWeights,
+          companies: [getBlankCompany(), getBlankCompany(1)],
+          weights: getDefaultWeights(),
           loading: false,
           isNew: true
         });
