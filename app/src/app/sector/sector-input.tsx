@@ -55,7 +55,10 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
         });
 
     function addColumn() {
-        tableColumns.companies.push(blankCompany);
+        tableColumns.companies.push({
+            ...blankCompany,
+            name: `${blankCompany.name}${tableColumns.companies.length}`
+        });
         setTableColumns({
             companies: tableColumns.companies,
             columns: getSectorColumns(
@@ -119,6 +122,7 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
     }
 
     function onUpdateCompanyName(oldName:string, oldTicker: string, newName: string, newTicker: string) {
+        console.log(`Updating old company: ${oldName}:${oldTicker} to ${newName}:${newTicker}`);
         // Find the company in the list and adjust it
         const newCompanyIndex = tableColumns.companies
             .findIndex(company => company.name === oldName && company.ticker === oldTicker);
