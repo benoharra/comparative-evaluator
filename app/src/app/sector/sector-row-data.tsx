@@ -1,9 +1,9 @@
 import { CompanyProps } from './../dto/company-dtos';
-import { buildProfitMetrics } from './input/profitability';
-import { buildLiquidityMetrics } from './input/liquidity';
-import { buildLeverageMetrics } from './input/leverage';
-import { buildEfficiencyMetrics } from './input/efficiency';
-import { buildGrowthMetrics } from './input/growth';
+import { buildProfitMetrics } from './input/data/profitability';
+import { buildLiquidityMetrics } from './input/data/liquidity';
+import { buildLeverageMetrics } from './input/data/leverage';
+import { buildEfficiencyMetrics } from './input/data/efficiency';
+import { buildGrowthMetrics } from './input/data/growth';
 import { Constants } from '../constants';
 
 export interface RowData {
