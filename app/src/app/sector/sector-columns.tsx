@@ -38,12 +38,20 @@ export const getSectorColumns = function(
                           />,
             accessor: company.ticker,
             minWidth: 140,
-            Cell: (cellInfo: CellInfo) => <Factor 
-                                            value={cellInfo.value} 
-                                            rowLabel={cellInfo.original}
-                                            ticker={company.ticker}
-                                            onValueUpdated={onUpdateData}
+            Cell: (cellInfo: CellInfo) => 
+                                        <div
+                                            style={{
+                                                width: '100%',
+                                                marginLeft: '5px'
+                                            }}>
+                                            <Factor 
+                                                value={cellInfo.value} 
+                                                rowLabel={cellInfo.original}
+                                                ticker={company.ticker}
+                                                onValueUpdated={onUpdateData}
                                             />
+                                        </div>
+                                        
         }));
 
     // Add the add columns button

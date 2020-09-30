@@ -8,10 +8,10 @@ import { CompanyProps } from './../dto/company-dtos';
 import { IndustryName } from './input/industry-name';
 import { getSectorColumns } from './sector-columns';
 import { buildSectorRowData } from './sector-row-data';
-import { blankCompany } from './data-mocker';
-import { TotalWeight } from './input/total-weight';
+import { blankCompany } from './input/data/data-defaults';
+import { TotalWeight } from './total-weight';
 
-import { withRouter, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import ReactTable from "react-table";
 
@@ -57,7 +57,8 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
     function addColumn() {
         tableColumns.companies.push({
             ...blankCompany,
-            name: `${blankCompany.name}${tableColumns.companies.length}`
+            name: `${blankCompany.name}${tableColumns.companies.length}`,
+            ticker: `${blankCompany.ticker}${tableColumns.companies.length}`
         });
         setTableColumns({
             companies: tableColumns.companies,
@@ -122,7 +123,6 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
     }
 
     function onUpdateCompanyName(oldName:string, oldTicker: string, newName: string, newTicker: string) {
-        console.log(`Updating old company: ${oldName}:${oldTicker} to ${newName}:${newTicker}`);
         // Find the company in the list and adjust it
         const newCompanyIndex = tableColumns.companies
             .findIndex(company => company.name === oldName && company.ticker === oldTicker);

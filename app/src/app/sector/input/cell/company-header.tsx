@@ -40,21 +40,38 @@ export const CompanyNameHeader: FunctionComponent<Props> = (props: Props): any =
     }
 
     return (
-        <div>
-            <input
-                style={{textAlign:'center'}}
-                type="text"
-                value={`${companyHeader.name} (${companyHeader.ticker})`}
-                onChange={onInputChange}
-                onBlur={onBlur}
-            />
-            <button 
-                onClick={onRemoveButtonClicked}
-                style={{textAlign:'center',
-                        backgroundColor:'red',
-                        padding:'5px 5px'}}>
-                X
-            </button>
+        <div style={{display: 'flex', width: '100%'}}>
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    width: 'auto',
+                    marginLeft: '5px'
+                }}>
+                <input
+                    style={{textAlign:'center', width: '160px'}}
+                    type="text"
+                    value={`${companyHeader.name} (${companyHeader.ticker})`}
+                    onChange={onInputChange}
+                    onBlur={onBlur}
+                />
+            </div>
+
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'right',
+                    marginLeft: '5px'
+                }}>
+                <button 
+                    onClick={onRemoveButtonClicked}
+                    style={{textAlign:'center',
+                            backgroundColor:'red',
+                            padding:'5px 5px'}}>
+                    X
+                </button>
+            </div>
+
         </div>
     )
 }

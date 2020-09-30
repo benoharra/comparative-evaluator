@@ -1,9 +1,9 @@
-import { RowData } from './../sector-row-data';
-import { CompanyProps } from './../../dto/company-dtos';
-import { Constants } from './../../constants';
+import { RowData } from '../../sector-row-data';
+import { CompanyProps } from '../../../dto/company-dtos';
+import { Constants } from '../../../constants';
 
 import { buildFactorRow, calculateCategoryWeight } from './inputDataUtils';
-import { getConfig, getProfitabilityKeys } from '../../config';
+import { getConfig, getProfitabilityKeys } from '../../../config';
 
 export const buildProfitMetrics = function(
     companyList: CompanyProps[],
