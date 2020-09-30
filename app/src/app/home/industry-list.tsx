@@ -36,11 +36,11 @@ export const IndustryList: FunctionComponent = (): any => {
             <h2 style={{ display: 'flex', justifyContent: 'center' }}>
                 Industries
             </h2>
-            <button style={{alignContent: 'right'}} onClick={newAnalysisClicked}>New Analysis</button>
             <ReactTable
                 data={tableState.data}
                 loading={tableState.loading}
-                onFetchData={(state, instance) => fetchData()}
+                defaultPageSize={10}
+                onFetchData={() => fetchData()}
                 columns={
                     [{
                         Header: "Industry",
@@ -71,6 +71,7 @@ export const IndustryList: FunctionComponent = (): any => {
                     }
                 ]}
             />
+            <button style={{alignContent: 'right', marginTop: '5px', padding: '10px'}} onClick={newAnalysisClicked}>New Analysis</button>
         </div>
     )
 }
