@@ -49,6 +49,7 @@ export const IndustryPage: FunctionComponent = function() {
   }
 
   useEffect(() => {
+    console.log('Re-rendering parent');
     if(!state.loading) {
       return;
     }

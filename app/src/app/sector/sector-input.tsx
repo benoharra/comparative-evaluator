@@ -87,15 +87,16 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
     }
 
     function onWeightChange(factor: string, value: number) {
-        tableData.weights.set(factor, value);
+        const newWeights = tableData.weights;
+        newWeights.set(factor, value);
         setTableData({
+            ...tableData,
             companyData: buildSectorRowData(
                 tableColumns.companies, 
                 tableData.weights,
                 tableData.dataUpdates),
-            weights: tableData.weights,
-            dataUpdates: tableData.dataUpdates,
-            industryName: tableData.industryName});
+            weights: newWeights
+        });
     }
 
     function getTotalWeight(): number {
@@ -112,17 +113,17 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
         row.set(updatedDataPoint.ticker, updatedDataPoint.newValue);
         newDataUpdates.set(updatedDataPoint.rowLabel, row);
         setTableData({
+            ...tableData,
             companyData: buildSectorRowData(
                 tableColumns.companies,
                 tableData.weights,
                 newDataUpdates
             ),
-            weights: tableData.weights,
-            dataUpdates: newDataUpdates,
-            industryName: tableData.industryName});
+            dataUpdates: newDataUpdates});
     }
 
     function onUpdateCompanyName(oldName:string, oldTicker: string, newName: string, newTicker: string) {
+        console.log(`Table Data Industry Name:${tableData.industryName}`);
         // Find the company in the list and adjust it
         const newCompanyIndex = tableColumns.companies
             .findIndex(company => company.name === oldName && company.ticker === oldTicker);
@@ -153,23 +154,22 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
                 });
                 newDataUpdates.set(rowLabel, newRow);
             });
+            console.log(`Table Data Industry Name:${tableData.industryName}`);
             setTableData({
+                ...tableData,
                 companyData: buildSectorRowData(
                     newCompanyList,
                     tableData.weights,
                     newDataUpdates
                 ),
-                weights: tableData.weights,
-                dataUpdates: newDataUpdates,
-                industryName: tableData.industryName});
+                dataUpdates: newDataUpdates});
         }
     }
 
     function onUpdateIndustryName(newName: string) {
+        console.log(`Setting newName ${newName}`)
         setTableData({
-            companyData: tableData.companyData,
-            weights: tableData.weights,
-            dataUpdates: tableData.dataUpdates,
+            ...tableData,
             industryName: newName
         });
     }

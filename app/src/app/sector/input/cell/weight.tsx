@@ -39,7 +39,7 @@ export const Weight: FunctionComponent<Props> = (props: Props): any => {
                 <input
                     style={{ textAlign: 'right' }}
                     type="number"
-                    max="100"
+                    width="10px"
                     value={value}
                     onChange={onInputChange}
                 />
