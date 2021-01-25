@@ -4,10 +4,12 @@ import main.controller.CompanyName
 import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.TypeAlias
 import java.time.LocalDate
+import java.util.*
 
 @TypeAlias("Ranking")
 data class IndustryRanking(
-        @Id val industryName: String,
+        @Id val industryId: UUID,
+        val industryName: String,
         val dateUpdated: LocalDate,
         val ranking: List<Ranking>
 )

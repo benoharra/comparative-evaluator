@@ -25,7 +25,8 @@ interface Props {
     companyList: CompanyProps[];
     weights: Map<string, number>;
     industryName: string;
-    isNew: boolean
+    isNew: boolean;
+    industryId?: string;
 }
 
 
@@ -51,7 +52,8 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
                 new Map()),
             weights: props.weights,
             dataUpdates: new Map<string, Map<string, any>>(),
-            industryName: props.industryName
+            industryName: props.industryName,
+            industryId: props.industryId
         });
 
     function addColumn() {
@@ -123,7 +125,6 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
     }
 
     function onUpdateCompanyName(oldName:string, oldTicker: string, newName: string, newTicker: string) {
-        console.log(`Table Data Industry Name:${tableData.industryName}`);
         // Find the company in the list and adjust it
         const newCompanyIndex = tableColumns.companies
             .findIndex(company => company.name === oldName && company.ticker === oldTicker);
@@ -154,7 +155,6 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
                 });
                 newDataUpdates.set(rowLabel, newRow);
             });
-            console.log(`Table Data Industry Name:${tableData.industryName}`);
             setTableData({
                 ...tableData,
                 companyData: buildSectorRowData(
@@ -167,7 +167,6 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
     }
 
     function onUpdateIndustryName(newName: string) {
-        console.log(`Setting newName ${newName}`)
         setTableData({
             ...tableData,
             industryName: newName
@@ -179,7 +178,16 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
             tableData.industryName,
             tableColumns.companies.map(company => ({name: company.name, ticker: company.ticker})),
             buildFactorMapToSubmit(),
-            tableData.weights);
+            tableData.weights,
+            props.industryId)
+        .then(industry => 
+            industry ?
+                setTableData({
+                    ...tableData,
+                    industryId: industry.id
+                })
+                : console.log('Unabled to Save Industry...')
+        );
     }
 
     function rankIndustry() {
@@ -187,8 +195,9 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
             tableData.industryName,
             tableColumns.companies.map(company => ({name: company.name, ticker: company.ticker})),
             buildFactorMapToSubmit(),
-            tableData.weights)
-        .then(() => history.push(`/ranking/${tableData.industryName}`))
+            tableData.weights,
+            tableData.industryId)
+        .then(() => history.push(`/ranking/${tableData.industryId}`))
         .catch((e) => console.log(e));
     }
 
@@ -238,7 +247,11 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
                         <button onClick={e => saveIndustry()} style={{padding:'10px', margin: '10px'}}>
                             Save Industry
                         </button>
-                        <button onClick={e => rankIndustry()} style={{padding: '10px'}}>
+                        <button 
+                            onClick={e => rankIndustry()} 
+                            style={{padding: '10px'}}
+                            disabled={tableData.industryId === undefined}
+                            >
                             Submit For Ranking
                         </button>
                     </div>

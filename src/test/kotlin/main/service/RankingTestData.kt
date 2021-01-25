@@ -1,7 +1,9 @@
 package main.service
 
+import main.controller.CompanyName
 import main.model.*
 import java.time.LocalDate
+import java.util.*
 
 fun companyList() : MutableList<Company> =
         mutableListOf(
@@ -10,8 +12,9 @@ fun companyList() : MutableList<Company> =
                 Company("Test3", "t3", 3.0F, null, null, null, null, null)
         )
 
-fun industry(companies: List<Company>) : Industry =
-        Industry(
+fun industry(companies: List<Company>, id: UUID) : IndustryAnalysis =
+        IndustryAnalysis(
+                id,
                 "Test",
                 LocalDate.now(),
                 companies,
@@ -91,9 +94,16 @@ fun companyFactorsWithinTolerances() : MutableMap<String, MutableMap<String, Fac
                     mutableMapOf(Pair(Factor.GROSS_PROFIT, Factor(.35F, tolerancePercentage = .5F)))))
 }
 
-fun industryRanking() : IndustryRanking =
+fun industryRanking(id: UUID, companies: List<Company>) : IndustryRanking =
         IndustryRanking(
+                id,
                 "test",
                 LocalDate.now(),
-                listOf()
+                companies.mapIndexed { index, company ->
+                    Ranking(
+                            CompanyName(company.name, company.ticker),
+                            index.toFloat(),
+                            1F,
+                            Recommendation(1F, "Sell")
+                    ) }
         )

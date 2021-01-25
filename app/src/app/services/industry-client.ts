@@ -18,10 +18,10 @@ export async function getAllIndustries()  {
         .catch(handleErrorArray);
 }
 
-export async function getIndustryView(industryName: string): Promise<IndustryView> {
+export async function getIndustryView(industryId: string): Promise<IndustryView> {
     return await axios.get<IndustryViewServerDto>('/view', {
         params: {
-            name: industryName
+            id: industryId
         },
         ...axiosConfig
     })
@@ -30,6 +30,7 @@ export async function getIndustryView(industryName: string): Promise<IndustryVie
         const serverIndustry = serverDto.industry;
         return <IndustryView>{
             industry: {
+                id: serverIndustry.id,
                 name: serverIndustry.name,
                 companies: serverIndustry.companies,
                 dateUpdated: serverIndustry.dateUpdated,
@@ -39,10 +40,10 @@ export async function getIndustryView(industryName: string): Promise<IndustryVie
     });
 }
 
-export async function getRankingsView(industryName: string): Promise<RankingsView> {
+export async function getRankingsView(industryId: string): Promise<RankingsView> {
     return await axios.get<RankingsView>('/ranking', {
         params: {
-            name: industryName
+            id: industryId
         },
         ...axiosConfig
     })
@@ -55,20 +56,22 @@ export async function saveIndustryData(
     name: string,
     companies: CompanyName[],
     companyFactors: Map<string, number>,
-    weights: Map<string, number>) 
+    weights: Map<string, number>,
+    id?: string) : Promise<IndustryServerDto | null>
 {
-    return await axios.post('/save', 
+    return await axios.post<IndustryServerDto>('/save', 
     {
+        id: id,
         name: name,
         companies: companies,
         companyFactors: mapToObject(companyFactors),
         weights: mapToObject(weights)
     },
     axiosConfig)
-    .then(() => true)
+    .then(response => response.data)
     .catch(e =>{
         console.log(e);
-        return false;
+        return null;
     })
 }
 
@@ -76,10 +79,12 @@ export async function rankIndustryData(
     name: string,
     companies: CompanyName[],
     companyFactors: Map<string, number>,
-    weights: Map<string, number>) 
+    weights: Map<string, number>,
+    id?: string) 
 {
     return axios.post<RankingsView>('/analyze',
      {
+        id: id,
         name: name,
         companies: companies,
         companyFactors: mapToObject(companyFactors),

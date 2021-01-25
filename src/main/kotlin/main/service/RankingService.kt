@@ -6,6 +6,7 @@ import main.model.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.time.LocalDate
+import java.util.*
 
 @Service("rankingService")
 class RankingService @Autowired constructor(
@@ -13,7 +14,7 @@ class RankingService @Autowired constructor(
         private val rankingRepository: RankingRepository
 ) {
 
-    fun performRanking(industry: Industry) {
+    fun performRanking(industry: IndustryAnalysis) {
         // Map the company factors to their tickers so the data is available for ranking
         val companyFactors: Map<String, Map<String, Factor>> = industry.companies.associateBy({it.ticker}, { mapAllFactors(it)})
 
@@ -30,6 +31,7 @@ class RankingService @Autowired constructor(
 
         // Build and save the IndustryRanking
         val industryRanking = IndustryRanking(
+                industry.id,
                 industry.name,
                 LocalDate.now(),
                 rankings
@@ -39,9 +41,9 @@ class RankingService @Autowired constructor(
         industryService.submitAfterRanking(industry, recommendations)
     }
 
-    fun getIndustryRanking(industryName: String) : RankingsView =
-        rankingRepository.findById(industryName).orElse(null)
-                ?.toRankingView() ?: throw IllegalArgumentException()
+    fun getIndustryRanking(industryId: UUID) : RankingsView =
+        rankingRepository.findById(industryId).orElse(null)
+                ?.toRankingView() ?: throw IllegalArgumentException("Industry Ranking not found")
 
     private fun IndustryRanking.toRankingView() : RankingsView =
             RankingsView(

@@ -1,9 +1,6 @@
 package main.controller
 
-import main.model.Company
-import main.model.Industry
-import main.model.Ranking
-import main.model.Recommendation
+import main.model.*
 import java.time.LocalDate
 
 data class CompanyListEntry(
@@ -19,7 +16,7 @@ data class RankingsView(
 )
 
 data class IndustryView(
-        val industry: Industry?
+        val industry: IndustryAnalysis?
 )
 
 data class CompanyView(

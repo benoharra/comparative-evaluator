@@ -3,6 +3,7 @@ package main.service
 import io.mockk.*
 import main.controller.CompanyName
 import main.model.Industry
+import main.model.IndustryAnalysis
 import main.model.IndustryRanking
 import main.model.RankingRepository
 import org.assertj.core.api.Assertions.assertThat
@@ -32,22 +33,23 @@ class RankingServiceTest {
     @Nested
     inner class PerformRankingTest() {
 
+        private val testIndustryId: UUID = UUID.randomUUID();
         private var companies = companyList()
-        private var industry = industry(companies)
+        private var industry = industry(companies, testIndustryId)
 
 
         @Test
         fun `Test ranking system includes all companies` () {
             val rankingSlot = slot<IndustryRanking>()
-            val industrySlot = slot<Industry>()
-            every { rankingRepository.save(capture(rankingSlot)) } returns industryRanking()
+            val industrySlot = slot<IndustryAnalysis>()
+            every { rankingRepository.save(capture(rankingSlot)) } returns industryRanking(testIndustryId, companies)
             every { industryService.submitAfterRanking(capture(industrySlot), any()) } just runs
-            every { rankingRepository.findById(industry.name) } returns Optional.of(industryRanking())
+            every { rankingRepository.findById(industry.id) } returns Optional.of(industryRanking(testIndustryId, companies))
 
 
             rankingService.performRanking(industry)
 
-            val rankingsView = rankingService.getIndustryRanking(industry.name)
+            val rankingsView = rankingService.getIndustryRanking(industry.id)
 
             assertThat(rankingsView.industry).isEqualToIgnoringCase(industry.name)
             assertThat(rankingsView.rankings).hasSize(3)

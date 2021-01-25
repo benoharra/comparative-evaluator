@@ -31,6 +31,16 @@ export const IndustryList: FunctionComponent = (): any => {
         history.push("/industry/new");
     }
 
+    function getIndustryId(industryName: string): string {
+        const industry = tableState.data.find(industry => industry.name === industryName);
+        if(industry) {
+            return industry.id;
+        } else {
+            console.error('Industry ID not found, routing to new...');
+            return 'new';
+        }
+    }
+
     return (
         <div style={{width: '45%'}}>
             <h2 style={{ display: 'flex', justifyContent: 'center' }}>
@@ -46,7 +56,7 @@ export const IndustryList: FunctionComponent = (): any => {
                         Header: "Industry",
                         accessor: "name",
                         Cell: (cellInfo: CellInfo) => (
-                            <Link to={`/industry/${cellInfo.value}`}>
+                            <Link to={`/industry/${getIndustryId(cellInfo.value)}`}>
                                 {cellInfo.value}
                             </Link>
                         )

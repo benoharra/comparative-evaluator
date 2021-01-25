@@ -1,6 +1,7 @@
 import { CompanyProps, Ranking, CompanyName } from './company-dtos';
 
 export interface IndustryProps {
+    id: string,
     name: string,
     companies: CompanyProps[],
     dateUpdated: string,
@@ -19,6 +20,7 @@ export interface IndustryView {
 }
 
 export interface IndustryServerDto {
+    id: string,
     name: string,
     companies: CompanyProps[],
     dateUpdated: string,

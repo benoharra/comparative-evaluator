@@ -1,10 +1,13 @@
 package main.controller
 
 import main.model.Industry
+import main.model.IndustryAnalysis
 import main.service.IndustryService
+import main.service.MigrationService
 import main.service.RankingService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
+import java.util.*
 
 @RestController
 @RequestMapping("/industry")
@@ -14,11 +17,11 @@ class IndustryController @Autowired constructor(
 ) {
 
     @PostMapping("/save")
-    fun saveIndustry(@RequestBody industryInput: IndustryInput) =
+    fun saveIndustry(@RequestBody industryInput: IndustryInput) : IndustryAnalysis =
             industryService.submit(convertIndustry(industryInput))
 
     @GetMapping("/all")
-    fun getIndustries() : List<Industry> =
+    fun getIndustries() : List<IndustryAnalysis> =
             industryService.getAllIndustries()
 
     @PostMapping("/analyze")
@@ -26,11 +29,10 @@ class IndustryController @Autowired constructor(
             rankingService.performRanking(convertIndustry(industryInput))
 
     @GetMapping("/ranking")
-    fun getIndustryRankings(@RequestParam name: String) : RankingsView =
-            rankingService.getIndustryRanking(name)
+    fun getIndustryRankings(@RequestParam id: String) : RankingsView =
+            rankingService.getIndustryRanking(UUID.fromString(id))
 
     @GetMapping("/view")
-    fun viewIndustry(@RequestParam name: String) : IndustryView =
-            IndustryView(industryService.getIndustry(name))
-
+    fun viewIndustry(@RequestParam id: UUID) : IndustryView =
+            IndustryView(industryService.getIndustry(id))
 }
