@@ -24,7 +24,7 @@ export const App: FunctionComponent = function() {
     <Router>
       <Switch>
         <Route exact path="/" component={HomePage}/>  
-        <Route path="/industry/:name" component={IndustryPage}/>
+        <Route path="/industry/:id" component={IndustryPage}/>
         <Route path="/ranking/:id" component={RankingPage}/>
         <Route path="/admin/migrate" component={MigratedPage}/>
       </Switch>

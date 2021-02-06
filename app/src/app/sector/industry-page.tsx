@@ -22,10 +22,11 @@ interface State {
   weights: Map<string, number>
   loading: boolean
   isNew: boolean
+  industryId?: string
 }
 
 export const IndustryPage: FunctionComponent = function() {
-  let { name } = useParams();
+  let { id } = useParams();
   const [state, setState] = useState<State>({
     industryName: "",
     companies: [],
@@ -34,14 +35,15 @@ export const IndustryPage: FunctionComponent = function() {
     isNew: true
   });
 
-  function getIndustry(name: string) {
-    getIndustryView(name)
+  function getIndustry(id: string) {
+    getIndustryView(id)
     .then(industryView => setState({
       industryName: industryView.industry.name,
       companies: industryView.industry.companies,
       weights: industryView.industry.weights,
       loading: false,
-      isNew: false
+      isNew: false,
+      industryId: industryView.industry.id
     }))
     .catch(e => {
       console.log(e);
@@ -52,8 +54,8 @@ export const IndustryPage: FunctionComponent = function() {
     if(!state.loading) {
       return;
     }
-    if(name && name !== "new") {
-      getIndustry(name);
+    if(id && id !== "new") {
+      getIndustry(id);
     } else {
         setState({
           industryName: "New Analysis",
@@ -79,7 +81,8 @@ export const IndustryPage: FunctionComponent = function() {
           companyList={state.companies} 
           weights={state.weights} 
           industryName={state.industryName}
-          isNew={state.isNew}/>
+          isNew={state.isNew}
+          industryId={state.industryId}/>
       </Fragment>
     );
   }

@@ -179,7 +179,7 @@ export const SectorInput: FunctionComponent<Props> = (props: Props): any => {
             tableColumns.companies.map(company => ({name: company.name, ticker: company.ticker})),
             buildFactorMapToSubmit(),
             tableData.weights,
-            props.industryId)
+            tableData.industryId)
         .then(industry => 
             industry ?
                 setTableData({

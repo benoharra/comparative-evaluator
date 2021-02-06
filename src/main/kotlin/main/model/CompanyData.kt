@@ -28,7 +28,7 @@ data class CompanyAnalysis(
         val dateUpdated: LocalDate,
         val industries: MutableSet<String>,
         val companyInfo: Company,
-        val analyses: MutableSet<UUID>?,
+        val analyses: MutableSet<UUID>,
         val recommendation: Recommendation? = null
 )
 

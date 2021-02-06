@@ -48,12 +48,25 @@ class CompanyService @Autowired constructor(
 
     fun getAllCompanyAnalysis(): List<CompanyAnalysis> = companyRepository.findAll().toList()
 
+    // Only to be used for migrations
     fun updateCompanyAnalyses(company: CompanyAnalysis) =
             companyRepository.save(
                     company.copy(
-                            analyses = mutableSetOf()
-                    )
-            )
+                            analyses = mutableSetOf()))
+
+    fun analysisDeleted(tickers: List<String>, industry: UUID) = run {
+        tickers.forEach{
+            ticker ->
+                val companyToUpdate: CompanyAnalysis = companyRepository.findById(ticker).get()
+                val companyAnalyses: MutableSet<UUID> = companyToUpdate.analyses.filter{ it != industry }.toMutableSet()
+                if(companyAnalyses.isEmpty()) {
+                    companyRepository.deleteById(ticker)
+                } else {
+                    companyRepository.save(companyToUpdate.copy(analyses = companyAnalyses))
+                }
+        }
+
+    }
 
     // TODO: This is super inefficient...save industry ID -> name in separate repo
     fun convertIndustryList(industryIds: MutableSet<UUID>?) =

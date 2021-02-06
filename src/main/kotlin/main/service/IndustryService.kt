@@ -30,6 +30,13 @@ class IndustryService @Autowired constructor(
     fun getIndustry(id: UUID) : IndustryAnalysis? =
             industryAnalysisRepository.findById(id).orElse(null)
 
+    fun deleteAnalysis(id: UUID) = run {
+        val analysis: IndustryAnalysis = industryAnalysisRepository.findById(id).orElse(null) ?: return
+        industryAnalysisRepository.deleteById(id)
+        companyService.analysisDeleted(analysis.companies.map{it.ticker}, id)
+    }
+
+    // Should only be used for migrations
     fun getAllNonIdIndustries(): List<Industry> =
             industryRepository.findAll().asSequence().toList();
 

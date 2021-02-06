@@ -7,7 +7,9 @@ import { handleErrorArray, objectToMap, mapToObject } from './client-utils';
 const axiosConfig = {
     baseURL: 'http://localhost:8080/comp-eval/industry',
     timeout: 10000,
-    headers: {'Content-Type':'application/json'}
+    headers: {
+        'Content-Type':'application/json'
+    }
 };
 
 const axiosClient = axios.create(axiosConfig);
@@ -91,4 +93,14 @@ export async function rankIndustryData(
         weights: mapToObject(weights)
     },
     axiosConfig);
+}
+
+export async function deleteAnalysis(analysisId: string) {
+    return await axios.delete('/delete', {
+        params: {
+            id: analysisId
+        },
+        ...axiosConfig
+    })
+    .catch(e => console.log(e))
 }

@@ -35,4 +35,7 @@ class IndustryController @Autowired constructor(
     @GetMapping("/view")
     fun viewIndustry(@RequestParam id: UUID) : IndustryView =
             IndustryView(industryService.getIndustry(id))
+
+    @DeleteMapping("/delete")
+    fun deleteIndustry(@RequestParam id: UUID) = industryService.deleteAnalysis(id)
 }

@@ -9,7 +9,7 @@ import ReactTable from "react-table";
 import { CellInfo } from "react-table";
 import { Link, useHistory } from 'react-router-dom';
 import { IndustryProps } from '../dto/industry-dtos';
-import { getAllIndustries } from '../services/industry-client';
+import { getAllIndustries, deleteAnalysis } from '../services/industry-client';
 
 
 interface TableState {
@@ -71,6 +71,17 @@ export const IndustryList: FunctionComponent = (): any => {
                     {
                         Header: "Date Updated",
                         accessor: "dateUpdated"
+                    },
+                    {                    
+                        Cell: (cellInfo: CellInfo) => (
+                            <button 
+                                onClick={() => {
+                                    deleteAnalysis(cellInfo.original.id)
+                                    .then(() => fetchData());
+                                }} >
+                                    Delete
+                            </button>
+                        )
                     }
                     ]
                 }
