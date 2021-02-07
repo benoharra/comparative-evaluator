@@ -54,6 +54,14 @@ class CompanyService @Autowired constructor(
                     company.copy(
                             analyses = mutableSetOf()))
 
+    // Only to be used for migrations
+    fun removeCompaniesWithNoAnalyses(validTickers: Set<String>) =
+            companyRepository.findAll().forEach{
+                if(!validTickers.contains(it.ticker)) {
+                    companyRepository.deleteById(it.ticker)
+                }
+            }
+
     fun analysisDeleted(tickers: List<String>, industry: UUID) = run {
         tickers.forEach{
             ticker ->

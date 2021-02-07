@@ -13,8 +13,10 @@ class MigrationService @Autowired constructor(
 ) {
 
     fun runAll() {
-        setAnalysesVariableInCompanies()
-        moveIndustriesToIdRepo()
+        // The first two migrations have already been successfully run
+//        setAnalysesVariableInCompanies()
+//        moveIndustriesToIdRepo()
+        removeCompaniesWithoutAnalyses()
     }
     fun moveIndustriesToIdRepo() {
         val existingIndustries = industryService.getAllNonIdIndustries()
@@ -39,7 +41,17 @@ class MigrationService @Autowired constructor(
         };
     }
 
+    // Should not need this method again...
     fun setAnalysesVariableInCompanies() {
         companyService.getAllCompanyAnalysis().forEach{ companyService.updateCompanyAnalyses(it) }
+    }
+
+    fun removeCompaniesWithoutAnalyses() {
+        companyService.removeCompaniesWithNoAnalyses(
+                industryService
+                        .getAllIndustries()
+                        .flatMap{it.companies}
+                        .map{it.ticker}
+                        .toSet())
     }
 }
