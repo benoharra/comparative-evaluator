@@ -1,27 +1,30 @@
 import * as React from 'react';
 import {
     createElement,
-    FunctionComponent,
-    useState
+    FunctionComponent
 } from 'react';
 
 import ReactTable from "react-table";
 import { CellInfo } from "react-table";
 import { CompanyInfo } from '../dto/company-dtos';
 import { Link } from 'react-router-dom';
-import { getAllCompanies } from '../services/company-client';
+import { IndustryProps } from '../dto/industry-dtos';
 
-interface TableState {
+interface CompanyListProps{
     data: CompanyInfo[],
-    loading: boolean
+    getIndustryByName: (name: string) => IndustryProps | undefined
 }
 
-export const CompanyList: FunctionComponent = (): any => {
-    const [tableState, setTableState] = useState({ data: [], loading: true } as TableState);
+export const CompanyList: FunctionComponent<CompanyListProps> = (props): any => {
 
-    function fetchData(): void {
-        getAllCompanies()
-            .then((companies) => setTableState({ data: companies, loading: false }));
+    function getIndustryId(industryName: string): string {
+        const industry = props.getIndustryByName(industryName);
+        if(industry) {
+            return industry.id;
+        } else {
+            console.error('Industry ID not found, routing to new...');
+            return 'new';
+        }
     }
 
     return (
@@ -30,9 +33,7 @@ export const CompanyList: FunctionComponent = (): any => {
                 Companies
             </h2>
             <ReactTable
-                data={tableState.data}
-                loading={tableState.loading}
-                onFetchData={(state, instance) => fetchData()}
+                data={props.data}
                 columns={
                     [{
                         Header: "Company",
@@ -49,7 +50,7 @@ export const CompanyList: FunctionComponent = (): any => {
                             cellInfo.value.map((industry: string, i: number) =>
                                 [
                                     i > 0 && ", ",
-                                    <Link to="/industry">
+                                    <Link to={`/industry/${getIndustryId(industry)}`}>
                                         {industry}
                                     </Link>
                                 ]  

@@ -22,7 +22,7 @@ interface RankingState {
 
 
 export const RankingPage: FunctionComponent = (): any => {
-    let{ name } = useParams();
+    let{ id } = useParams();
 
     const [state, setState] = useState<RankingState>({
         rankingData: {
@@ -46,8 +46,8 @@ export const RankingPage: FunctionComponent = (): any => {
     };
 
 
-    function getRanking(industryName: string) {
-        getRankingsView(name as string)
+    function getRanking() {
+        getRankingsView(id as string)
         .then(data => setState({
             rankingData: data,
             loading: false,
@@ -67,7 +67,7 @@ export const RankingPage: FunctionComponent = (): any => {
         if(!state.loading) {
             return;
         } else {
-            getRanking(name as string);
+            getRanking();
         }
     })
 

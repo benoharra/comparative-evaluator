@@ -3,10 +3,20 @@ package main.model
 import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.TypeAlias
 import java.time.LocalDate
+import java.util.*
 
 @TypeAlias("industry")
 data class Industry(
         @Id val name: String,
+        val dateUpdated: LocalDate,
+        val companies: List<Company>,
+        val weights: Map<String, Float>
+)
+
+@TypeAlias("analysis")
+data class IndustryAnalysis(
+        @Id val id: UUID,
+        val name: String,
         val dateUpdated: LocalDate,
         val companies: List<Company>,
         val weights: Map<String, Float>
@@ -18,8 +28,10 @@ data class CompanyAnalysis(
         val dateUpdated: LocalDate,
         val industries: MutableSet<String>,
         val companyInfo: Company,
+        val analyses: MutableSet<UUID>,
         val recommendation: Recommendation? = null
 )
+
 
 data class Company(
         val name: String,

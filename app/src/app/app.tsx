@@ -15,6 +15,7 @@ import {
 import { HomePage } from './home/home-page';
 import { IndustryPage } from './sector/industry-page';
 import { RankingPage } from './ranking/ranking-page';
+import { MigratedPage } from './admin/migrated';
 
 
 export const App: FunctionComponent = function() {
@@ -23,8 +24,9 @@ export const App: FunctionComponent = function() {
     <Router>
       <Switch>
         <Route exact path="/" component={HomePage}/>  
-        <Route path="/industry/:name" component={IndustryPage}/>
-        <Route path="/ranking/:name" component={RankingPage}/>
+        <Route path="/industry/:id" component={IndustryPage}/>
+        <Route path="/ranking/:id" component={RankingPage}/>
+        <Route path="/admin/migrate" component={MigratedPage}/>
       </Switch>
     </Router>
   );
